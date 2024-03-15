@@ -8,7 +8,7 @@ public class BattlefieldController : MonoBehaviour
     public static BattlefieldController instance {get; private set;}
     private BattlefieldGrid battlefieldGrid;
     public int width = 5;
-    public int height= 5;
+    public int height = 5;
     private Cell[,] state;
 
     private void Awake()
@@ -29,7 +29,8 @@ public class BattlefieldController : MonoBehaviour
 
     private void NewArena()
     {
-        Camera.main.transform.position = new Vector3(width / 2f, height/ 2f, -(2f*10 *width));
+        Camera.main.transform.position = new Vector3(width / 2f, height/ 2f, -10.0f);
+        Camera.main.orthographicSize = width*0.8f;
         state = new Cell[width,height];
         for (int x=0; x< width; x++)
         {
