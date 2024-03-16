@@ -25,6 +25,7 @@ public class BattlefieldController : MonoBehaviour
     private void Start()
     {
         NewArena();
+        GetComponentInChildren<EnemyController>().SpawnEnemy();
     }
 
     private void NewArena()
