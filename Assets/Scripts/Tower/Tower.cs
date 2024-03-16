@@ -4,20 +4,14 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
-    public int health;
-    public float damage;
-    public float attackSpeed;
-
-    // targeting
-    // ability
-    // bool isAOE
-    // sprite
-    // cooldown
+    public string towerName;
+    public string description;
+    public string towerType;
+    public Dictionary<string, float> stats {get; private set;}
 
     private void Update()
     {
-        // move towards next node in path
-        // if intersecting with player structure, attack
+
     }
 
     private void GetPath()
@@ -25,10 +19,12 @@ public class Tower : MonoBehaviour
 
     }
 
-    public void Initialize(int health, float damage, float attackSpeed)
+    public void Initialize(TowerBlueprint towerBlueprint)
     {
-        this.health = health;
-        this.damage = damage;
-        this.attackSpeed = attackSpeed;
+        this.towerName = towerBlueprint.towerName;
+        this.description = towerBlueprint.description;
+        this.towerType = towerBlueprint.towerType;
+        this.stats = towerBlueprint.baseStats;
+        GetComponent<CircleCollider2D>().radius = stats["attackRange"];
     }
 }

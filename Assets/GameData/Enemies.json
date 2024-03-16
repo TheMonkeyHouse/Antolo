@@ -1,0 +1,14 @@
+{
+    "BasicEnemy" : {
+        "name" : "Basic Enemy",
+        "description" : "basic enemy",
+        "baseStats" :
+        {
+            "health" : 50,
+            "speed" : 0.5,
+            "size" : 1,
+            "damage" : 5,
+            "attackSpeed" : 0.5
+        }
+    }
+}

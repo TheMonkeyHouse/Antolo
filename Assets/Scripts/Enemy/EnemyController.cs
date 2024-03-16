@@ -6,6 +6,7 @@ public class EnemyController : MonoBehaviour
 {
 
     public GameObject enemyPrefab;
+    public List<GameObject> enemiesOnScreen;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +22,7 @@ public class EnemyController : MonoBehaviour
     public void SpawnEnemy()
     {
         GameObject newEnemy = Instantiate(enemyPrefab, transform);
-        newEnemy.GetComponent<Enemy>().Initialize(5, 2.0f, 0.5f);
+        newEnemy.GetComponent<Enemy>().Initialize(Enemies.enemyBlueprints["BasicEnemy"]);
+        enemiesOnScreen.Add(newEnemy);
     }
 }

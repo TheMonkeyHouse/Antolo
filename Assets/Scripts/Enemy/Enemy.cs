@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public int health;
+    public float health;
     public float speed;
     public float size;
+    private HealthBar healthBar;
+    private SpriteRenderer sr;
 
     // targeting
     // ability
@@ -15,14 +17,17 @@ public class Enemy : MonoBehaviour
 
     private List<Vector3> pathing;
 
+    private void Awake()
+    {
+        sr = GetComponentInChildren<SpriteRenderer>();
+        healthBar = GetComponentInChildren<HealthBar>();
+        GetPath();
+    }
+
     private void Update()
     {
-        // move towards next node in path
-        // if intersecting with player structure, attack
-        Vector3 heading = pathing[0] - transform.position;
-        Vector3 direction = heading / heading.magnitude;
-
-        transform.Translate(direction * speed * Time.deltaTime);
+        // move towards center
+        transform.position = Vector3.MoveTowards(transform.position, pathing[0], speed*Time.deltaTime);
     }
 
     private void GetPath()
@@ -33,11 +38,36 @@ public class Enemy : MonoBehaviour
         pathing.Add(new Vector3(BattlefieldController.instance.width/2f, BattlefieldController.instance.height/2f, 0));
     }
 
-    public void Initialize(int health, float speed, float size)
+    public void TakeDamage(float dmg)
     {
-        this.health = health;
-        this.speed = speed;
-        this.size = size;
+        StartCoroutine(DamageAnimator());
+        this.health = this.health - dmg;
+        if (this.health <= 0)
+        {
+            Die();
+            return;
+        }
+        this.healthBar.UpdateCurrentHealth(this.health);
+    }
+
+    private IEnumerator DamageAnimator()
+    {
+        sr.color = new Color(1, 0, 0 ,0.5f);
+        yield return new WaitForSecondsRealtime(0.1f);
+        sr.color = new Color(1, 1, 1 ,1);
+    }
+
+    private void Die()
+    {
+        Destroy(this.gameObject);
+    }
+
+    public void Initialize(EnemyBlueprint enemyBlueprint)
+    {
+        this.health = enemyBlueprint.baseStats["health"];
+        this.speed = enemyBlueprint.baseStats["speed"];
+        this.size = enemyBlueprint.baseStats["size"];
+        healthBar.InitHealthBar(health);
         GetPath();
     }
 }

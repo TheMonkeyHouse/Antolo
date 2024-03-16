@@ -9,6 +9,7 @@ public class BattlefieldController : MonoBehaviour
     private BattlefieldGrid battlefieldGrid;
     public int width = 5;
     public int height = 5;
+    public Player player;
     private Cell[,] state;
 
     private void Awake()
@@ -20,6 +21,12 @@ public class BattlefieldController : MonoBehaviour
             Destroy(this);
         }
         battlefieldGrid = GetComponentInChildren<BattlefieldGrid>();
+        player = GetComponentInChildren<Player>();
+        BattlefieldEventManager.instance.TowerPlaced += PlaceTower;
+        //load towers
+        Towers.LoadTowers();
+        //load enemies
+        Enemies.LoadEnemies();
     }
 
     private void Start()
@@ -53,6 +60,12 @@ public class BattlefieldController : MonoBehaviour
     public void DrawGrid()
     {
         battlefieldGrid.DrawGrid(state);
+    }
+
+    public void PlaceTower(TowerBlueprint towerBlueprint, Vector3Int position)
+    {
+        this.state[position.x, position.y].type = CellType.Tower;
+        DrawGrid();
     }
 
     
