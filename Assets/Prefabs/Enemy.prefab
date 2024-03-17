@@ -406,7 +406,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6195679836452416824}
   - component: {fileID: 7502070791091009461}
-  - component: {fileID: 6456806222411970185}
+  - component: {fileID: 9178005402343420492}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -447,8 +447,8 @@ MonoBehaviour:
   health: 50
   speed: 1
   size: 0.5
---- !u!61 &6456806222411970185
-BoxCollider2D:
+--- !u!58 &9178005402343420492
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -479,16 +479,6 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 0.16, y: 0.16}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
+  m_Offset: {x: 0.45, y: 0.45}
   serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
-  m_EdgeRadius: 0
+  m_Radius: 0.45

@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class TowerSelector : MonoBehaviour
 {
-    public TowerBlueprint towerBlueprint;
+    private TowerBlueprint towerBlueprint;
+    [SerializeField]
+    private string towerSeleciton;
     private bool isSelected;
 
     void Awake()
     {
         isSelected = false;
         BattlefieldEventManager.instance.TowerDeselected += Deselect;
-        towerBlueprint = Towers.towerBlueprints["MachineGunTower"];
+        towerBlueprint = Towers.towerBlueprints[towerSeleciton];
     }
 
     public void Deselect()

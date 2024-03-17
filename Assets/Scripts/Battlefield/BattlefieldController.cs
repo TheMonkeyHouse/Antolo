@@ -12,6 +12,9 @@ public class BattlefieldController : MonoBehaviour
     public Player player;
     private Cell[,] state;
 
+    // temp
+    private float timeSinceEnemySpawn;
+
     private void Awake()
     {
         if (instance == null)
@@ -27,12 +30,25 @@ public class BattlefieldController : MonoBehaviour
         Towers.LoadTowers();
         //load enemies
         Enemies.LoadEnemies();
+
+        //temp
+        timeSinceEnemySpawn = 5.0f;
     }
 
     private void Start()
     {
         NewArena();
-        GetComponentInChildren<EnemyController>().SpawnEnemy();
+    }
+
+    private void Update()
+    {
+        //spawn enemny every 5 seconds
+        timeSinceEnemySpawn += Time.deltaTime;
+        if (timeSinceEnemySpawn >= 5.0)
+        {
+            GetComponentInChildren<EnemyController>().SpawnEnemy();
+            timeSinceEnemySpawn = 0.0f;
+        }
     }
 
     private void NewArena()

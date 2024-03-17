@@ -4,11 +4,19 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public float health;
-    public float speed;
-    public float size;
     private HealthBar healthBar;
     private SpriteRenderer sr;
+    bool isAttacking;
+    private GameObject currentTarget;
+    private float timeSinceLastAttack;
+
+    // stats
+    public float health {get; private set;}
+    public float speed {get; private set;}
+    public float damage {get; private set;}
+    public float size {get; private set;}
+    public float attackSpeed {get; private set;}
+
 
     // targeting
     // ability
@@ -21,13 +29,35 @@ public class Enemy : MonoBehaviour
     {
         sr = GetComponentInChildren<SpriteRenderer>();
         healthBar = GetComponentInChildren<HealthBar>();
+        isAttacking = false;
         GetPath();
     }
 
     private void Update()
     {
-        // move towards center
-        transform.position = Vector3.MoveTowards(transform.position, pathing[0], speed*Time.deltaTime);
+        // if not attacking, move towards center
+        if (!isAttacking)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, pathing[0], speed*Time.deltaTime);
+            return;
+        }
+
+        // if no target, then stop attacking
+        if (currentTarget == null)
+        {
+            isAttacking = false;
+            return;
+        }
+
+        this.timeSinceLastAttack += Time.deltaTime;
+
+        // attack
+        if (this.timeSinceLastAttack >  1f / attackSpeed)
+        {
+            this.Attack(currentTarget);
+            this.timeSinceLastAttack = 0;
+        }
+        
     }
 
     private void GetPath()
@@ -38,16 +68,32 @@ public class Enemy : MonoBehaviour
         pathing.Add(new Vector3(BattlefieldController.instance.width/2f, BattlefieldController.instance.height/2f, 0));
     }
 
+    // check for tower attack
+    private void OnTriggerEnter2D(Collider2D col){
+        if (!col.gameObject.CompareTag("Tower"))
+        {
+            return;
+        }
+        currentTarget = col.gameObject;
+        isAttacking = true;
+    }
+
+    private void Attack(GameObject target)
+    {
+        // animation + other effects
+        target.GetComponent<Tower>().TakeDamage(damage);
+    }
+
     public void TakeDamage(float dmg)
     {
         StartCoroutine(DamageAnimator());
-        this.health = this.health - dmg;
-        if (this.health <= 0)
+        health = health - dmg;
+        if (health <= 0)
         {
             Die();
             return;
         }
-        this.healthBar.UpdateCurrentHealth(this.health);
+        this.healthBar.UpdateCurrentHealth(health);
     }
 
     private IEnumerator DamageAnimator()
@@ -67,6 +113,8 @@ public class Enemy : MonoBehaviour
         this.health = enemyBlueprint.baseStats["health"];
         this.speed = enemyBlueprint.baseStats["speed"];
         this.size = enemyBlueprint.baseStats["size"];
+        this.damage = enemyBlueprint.baseStats["damage"];
+        this.attackSpeed = enemyBlueprint.baseStats["attackSpeed"];
         healthBar.InitHealthBar(health);
         GetPath();
     }

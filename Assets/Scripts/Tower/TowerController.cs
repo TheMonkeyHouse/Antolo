@@ -5,7 +5,8 @@ using UnityEngine;
 public class TowerController : MonoBehaviour
 {
     [SerializeField] private GameObject towerPrefab;
-    [SerializeField] private GameObject attackingTowerPrefab;
+    [SerializeField] private GameObject machineGunTowerPrefab;
+    [SerializeField] private GameObject sniperTowerPrefab;
 
     void Awake()
     {
@@ -16,11 +17,15 @@ public class TowerController : MonoBehaviour
     {
         GameObject newTowerGO;
         Tower newTower;
-        switch (towerBlueprint.towerType)
+        switch (towerBlueprint.towerName)
         {
-            case "AttackingTower":
-                newTowerGO = Instantiate(attackingTowerPrefab, gameObject.transform);
-                newTower = newTowerGO.GetComponent<AttackingTower>();
+            case "Machine Gun Tower":
+                newTowerGO = Instantiate(machineGunTowerPrefab, gameObject.transform);
+                newTower = newTowerGO.GetComponentInChildren<HitscanAttackingTower>();
+                break;
+            case "Sniper Tower":
+                newTowerGO = Instantiate(sniperTowerPrefab, gameObject.transform);
+                newTower = newTowerGO.GetComponentInChildren<HitscanAttackingTower>();
                 break;
             default:
                 newTowerGO = Instantiate(towerPrefab, gameObject.transform);

@@ -2,23 +2,23 @@
     "MachineGunTower" : {
         "towerName" : "Machine Gun Tower",
         "description" : "Medium range, low damage, high fire rate tower",
-        "towerType" : "AttackingTower",
+        "towerType" : "HitscanAttackingTower",
         "baseStats" : {
             "health" : 100.0,
-            "damage" : 5.0,
+            "damage" : 3.0,
             "attackSpeed" : 2.0,
-            "attackRange" : 3
+            "attackRange" : 3.0
         }
     },
     "SniperTower" : {
         "towerName" : "Sniper Tower",
         "description" : "High range, high damage, low fire rate tower",
-        "towerType" : "AttackingTower",
+        "towerType" : "HitscanAttackingTower",
         "baseStats" : {
             "health" : 50.0,
-            "damage" : 20.0,
+            "damage" : 15.0,
             "attackSpeed" : 0.25,
-            "attackRange" : 7
+            "attackRange" : 12.0
         }
     }
 }
