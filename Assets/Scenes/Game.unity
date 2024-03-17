@@ -1051,6 +1051,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerPrefab: {fileID: 7671462066513215350, guid: 2cc8cbfab052ed24c9ba257e7891944a, type: 3}
   machineGunTowerPrefab: {fileID: 8941858339577856894, guid: 8a324d1195f39444e9659f8c870000cd, type: 3}
+  sniperTowerPrefab: {fileID: 8738327928652027460, guid: 947318319a83bba4eae29d3d9754aaa6, type: 3}
 --- !u!1 &841968957
 GameObject:
   m_ObjectHideFlags: 0
@@ -1108,7 +1109,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Machine Gun
+  m_text: Sniper
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
