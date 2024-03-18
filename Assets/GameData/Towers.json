@@ -15,7 +15,8 @@
             "health" : 100.0,
             "damage" : 1.0,
             "attackSpeed" : 2.0,
-            "attackRange" : 3.0
+            "attackRange" : 3.0,
+            "rotationSpeed" : 360
         }
     },
     "SniperTower" : {
@@ -26,7 +27,8 @@
             "health" : 50.0,
             "damage" : 15.0,
             "attackSpeed" : 0.25,
-            "attackRange" : 12.0
+            "attackRange" : 12.0,
+            "rotationSpeed" : 720
         }
     }
 }

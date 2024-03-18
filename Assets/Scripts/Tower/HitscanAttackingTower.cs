@@ -12,6 +12,7 @@ public class HitscanAttackingTower : Tower {
     public float damage {get; private set;}
     public float attackSpeed {get; private set;}
     public float attackRange {get; private set;}
+    public float rotationSpeed {get; private set;}
     
     void Awake()
     {
@@ -27,14 +28,14 @@ public class HitscanAttackingTower : Tower {
         {
             return;
         }
-        
-        // rotate sprite
-        Vector3 dir = gameObject.transform.position - target.transform.position;
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 90;
-        towerSprite.gameObject.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+        // rotate towards
+        float angle = Mathf.Atan2(target.transform.position.y - transform.position.y, target.transform.position.x -transform.position.x ) * Mathf.Rad2Deg - 90;
+        Quaternion targetRotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        towerSprite.gameObject.transform.rotation = Quaternion.RotateTowards(towerSprite.gameObject.transform.rotation, targetRotation, rotationSpeed*Time.deltaTime);
 
         // shoot
-        if (this.timeSinceLastAttack >  1f / this.attackSpeed)
+        if (this.timeSinceLastAttack >  1f / this.attackSpeed && targetRotation == towerSprite.gameObject.transform.rotation)
         {
             this.Attack(target);
             this.timeSinceLastAttack = 0;
@@ -53,6 +54,7 @@ public class HitscanAttackingTower : Tower {
         this.damage = towerBlueprint.baseStats["damage"];
         this.attackSpeed = towerBlueprint.baseStats["attackSpeed"];
         this.attackRange = towerBlueprint.baseStats["attackRange"];
+        this.rotationSpeed = towerBlueprint.baseStats["rotationSpeed"];
         towerRange.SetRadius(towerBlueprint.baseStats["attackRange"]);
     }
 }

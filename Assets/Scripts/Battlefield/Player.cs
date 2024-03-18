@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public int health;
-
+    public int money {get; private set;}
+    public int level {get; private set;}
     // tower choices
-
-    // energy
-
-    // money
 
     public TowerBlueprint selectedTower;
 
