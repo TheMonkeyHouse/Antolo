@@ -4,7 +4,8 @@
         "description" : "protect at all costs",
         "towerType" : "Homebase",
         "baseStats" : {
-            "health" : 200
+            "health" : 200,
+            "cost" : 0
         }
     },
     "MachineGunTower" : {
@@ -16,7 +17,8 @@
             "damage" : 1.0,
             "attackSpeed" : 2.0,
             "attackRange" : 3.0,
-            "rotationSpeed" : 360
+            "rotationSpeed" : 360,
+            "cost" : 350
         }
     },
     "SniperTower" : {
@@ -28,7 +30,8 @@
             "damage" : 15.0,
             "attackSpeed" : 0.25,
             "attackRange" : 12.0,
-            "rotationSpeed" : 720
+            "rotationSpeed" : 720,
+            "cost" : 200
         }
     }
 }

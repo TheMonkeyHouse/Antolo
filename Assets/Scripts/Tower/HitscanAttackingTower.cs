@@ -55,6 +55,7 @@ public class HitscanAttackingTower : Tower {
         this.attackSpeed = towerBlueprint.baseStats["attackSpeed"];
         this.attackRange = towerBlueprint.baseStats["attackRange"];
         this.rotationSpeed = towerBlueprint.baseStats["rotationSpeed"];
+        this.timeSinceLastAttack = 1f / this.attackSpeed;
         towerRange.SetRadius(towerBlueprint.baseStats["attackRange"]);
     }
 }

@@ -37,20 +37,27 @@ public class GridController : MonoBehaviour
 
         // left mouse click -> get tile info / place tower
         if (Input.GetMouseButton(0)) {
+            
             TowerBlueprint selectedTower = BattlefieldController.instance.player.selectedTower;
+            
             if (!(selectedTower == null))
             {
-                if (!BattlefieldController.instance.IsInGrid(mousePos))
-            {
-                return;
-            }
                 if (isPlaceable(selectedTower, mousePos))
                 {
                     BattlefieldEventManager.instance.OnTowerPlaced(selectedTower, mousePos);
+                    
                 }
             }
+            
             // deselect
             BattlefieldEventManager.instance.OnTowerDeselected();
+            
+            // update highlight
+            if (BattlefieldController.instance.IsInGrid(mousePos))
+            {
+                interactiveMap.SetTile(mousePos, GetTile(mousePos));
+            }
+            
             // display info about tile
         }
     }
@@ -75,7 +82,15 @@ public class GridController : MonoBehaviour
 
     bool isPlaceable(TowerBlueprint towerBlueprint, Vector3Int pos)
     {
+        if (!BattlefieldController.instance.IsInGrid(pos))
+        {
+            return false;
+        }
         if (BattlefieldController.instance.state[pos.x,pos.y].type == CellType.Tower)
+        {
+            return false;
+        }
+        if (BattlefieldController.instance.player.money < towerBlueprint.baseStats["cost"])
         {
             return false;
         }

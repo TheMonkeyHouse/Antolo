@@ -11,6 +11,8 @@ public class EnemyController : MonoBehaviour
     private void Awake()
     {
         BattlefieldEventManager.instance.EnemyDestroyed += EnemyDestroyed;
+        BattlefieldEventManager.instance.WaveFinishedSpawning += WaveFinishedSpawning;
+        BattlefieldEventManager.instance.EnemySpawned += SpawnEnemy;
     }
 
     private Vector3 GetRandomSpawnPoint()
@@ -49,11 +51,25 @@ public class EnemyController : MonoBehaviour
         this.enemiesOnScreen.Remove(enemy);
     }
 
-    public void SpawnEnemy()
+    public void SpawnEnemy(EnemyBlueprint enemyBlueprint)
     {
         GameObject newEnemy = Instantiate(enemyPrefab, transform);
         newEnemy.transform.Translate(GetRandomSpawnPoint());
-        newEnemy.GetComponent<Enemy>().Initialize(Enemies.enemyBlueprints["BasicEnemy"]);
+        newEnemy.GetComponent<Enemy>().Initialize(enemyBlueprint);
         enemiesOnScreen.Add(newEnemy);
+    }
+
+    private void WaveFinishedSpawning()
+    {
+        StartCoroutine(CheckWaveFinised());
+    }
+
+    private IEnumerator CheckWaveFinised()
+    {
+        while(enemiesOnScreen.Count > 0)
+        {
+            yield return null;
+        }
+        BattlefieldEventManager.instance.OnWaveCleared();
     }
 }

@@ -11,10 +11,7 @@ public class BattlefieldController : MonoBehaviour
     public int height = 5;
     public Player player;
     public Cell[,] state {get; private set;}
-
-    // temp
-    private float timeSinceEnemySpawn;
-
+    private int currentWave;
     private void Awake()
     {
         if (instance == null)
@@ -28,29 +25,16 @@ public class BattlefieldController : MonoBehaviour
         // init events
         BattlefieldEventManager.instance.TowerPlaced += PlaceTower;
         BattlefieldEventManager.instance.TowerDestroyed += TowerDestroyed;
+        BattlefieldEventManager.instance.StartNewWave += StartNewWave;
         //load towers
         Towers.LoadTowers();
         //load enemies
         Enemies.LoadEnemies();
-
-        //temp
-        timeSinceEnemySpawn = 5.0f;
     }
 
     private void Start()
     {
         NewArena();
-    }
-
-    private void Update()
-    {
-        //spawn enemny every 5 seconds
-        timeSinceEnemySpawn += Time.deltaTime;
-        if (timeSinceEnemySpawn >= 5.0)
-        {
-            GetComponentInChildren<EnemyController>().SpawnEnemy();
-            timeSinceEnemySpawn = 0.0f;
-        }
     }
 
     private void NewArena()
@@ -73,6 +57,8 @@ public class BattlefieldController : MonoBehaviour
             }
         }
         BattlefieldEventManager.instance.OnSetHomebase(new Vector3Int(width/2, height/2, 0));
+        player.Initialize(1000, 0);
+        currentWave = 0;
         DrawGrid();
     }
 
@@ -92,6 +78,22 @@ public class BattlefieldController : MonoBehaviour
         Vector3Int location = tower.GetComponent<Tower>().location;
         this.state[location.x, location.y].type = CellType.Ground;
         DrawGrid();
+    }
+
+    public void StartNewWave()
+    {
+        currentWave++;
+        Wave newWave = MakeNewWave();
+        print("starting wave " + currentWave);
+        StartCoroutine(newWave.WaveSpawner());
+    }
+
+    public Wave MakeNewWave()
+    {
+        float rating = currentWave*2 + 1; // wave scaling function = 15x^(3) + 15 O(x^1.5)
+        EnemyBlueprint[] possibleChoices = new EnemyBlueprint[] {Enemies.enemyBlueprints["BasicEnemy"]};
+        float[] weights = new float[] {1.0f};
+        return new Wave(rating, possibleChoices, weights);
     }
 
     public bool IsInGrid(Vector3Int position)

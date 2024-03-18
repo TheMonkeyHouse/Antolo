@@ -25,6 +25,11 @@ public class BattlefieldEventManager : MonoBehaviour
     public event Action<GameObject> EnemyDestroyed;
     public event Action<GameObject> TowerDestroyed;
     public event Action HomebaseDestroyed;
+    public event Action StartNewWave;
+    public event Action WaveFinishedSpawning;
+    public event Action WaveCleared;
+    public event Action<EnemyBlueprint> EnemySpawned;
+
 
     // more events added here
 
@@ -64,5 +69,21 @@ public class BattlefieldEventManager : MonoBehaviour
     public void OnHomebaseDestroyed()
     {
         HomebaseDestroyed?.Invoke();
+    }
+    public void OnStartNewWave()
+    {
+        StartNewWave?.Invoke();
+    }
+    public void OnWaveFinishedSpawning()
+    {
+        WaveFinishedSpawning?.Invoke();
+    }
+    public void OnWaveCleared()
+    {
+        WaveCleared?.Invoke();
+    }
+    public void OnEnemySpawned(EnemyBlueprint enemyBlueprint)
+    {
+        EnemySpawned?.Invoke(enemyBlueprint);
     }
 }
