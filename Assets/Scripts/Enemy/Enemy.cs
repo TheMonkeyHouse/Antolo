@@ -6,8 +6,7 @@ public class Enemy : MonoBehaviour
 {
     private HealthBar healthBar;
     private SpriteRenderer sr;
-    bool isAttacking;
-    private GameObject currentTarget;
+    private List<GameObject> currentTargets;
     private float timeSinceLastAttack;
 
     // stats
@@ -27,25 +26,20 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
+        currentTargets = new List<GameObject>();
         sr = GetComponentInChildren<SpriteRenderer>();
         healthBar = GetComponentInChildren<HealthBar>();
-        isAttacking = false;
+        BattlefieldEventManager.instance.TowerDestroyed += TowerDestroyed;
         GetPath();
     }
 
     private void Update()
     {
+        GameObject target = GetTarget();
         // if not attacking, move towards center
-        if (!isAttacking)
+        if (target == null)
         {
             transform.position = Vector3.MoveTowards(transform.position, pathing[0], speed*Time.deltaTime);
-            return;
-        }
-
-        // if no target, then stop attacking
-        if (currentTarget == null)
-        {
-            isAttacking = false;
             return;
         }
 
@@ -54,7 +48,7 @@ public class Enemy : MonoBehaviour
         // attack
         if (this.timeSinceLastAttack >  1f / attackSpeed)
         {
-            this.Attack(currentTarget);
+            this.Attack(target);
             this.timeSinceLastAttack = 0;
         }
         
@@ -70,12 +64,31 @@ public class Enemy : MonoBehaviour
 
     // check for tower attack
     private void OnTriggerEnter2D(Collider2D col){
-        if (!col.gameObject.CompareTag("Tower"))
+        if (col.gameObject.CompareTag("Homebase"))
         {
-            return;
+            currentTargets.Add(col.gameObject);
         }
-        currentTarget = col.gameObject;
-        isAttacking = true;
+        if (col.gameObject.CompareTag("Tower"))
+        {
+            currentTargets.Add(col.gameObject);
+        }
+    }
+
+    private GameObject GetTarget()
+    {
+        if (currentTargets.Count == 0)
+        {
+            return null;
+        }
+        foreach (GameObject target in currentTargets)
+        {
+            // target towers over base
+            if (target.CompareTag("Tower"))
+            {
+                return target;
+            }
+        }
+        return currentTargets[0];
     }
 
     private void Attack(GameObject target)
@@ -105,7 +118,13 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
+        BattlefieldEventManager.instance.OnEnemyDestroyed(this.gameObject);
         Destroy(this.gameObject);
+    }
+
+    private void TowerDestroyed(GameObject tower)
+    {
+        currentTargets.Remove(tower);
     }
 
     public void Initialize(EnemyBlueprint enemyBlueprint)

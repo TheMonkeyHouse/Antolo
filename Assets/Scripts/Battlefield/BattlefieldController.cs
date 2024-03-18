@@ -10,7 +10,7 @@ public class BattlefieldController : MonoBehaviour
     public int width = 5;
     public int height = 5;
     public Player player;
-    private Cell[,] state;
+    public Cell[,] state {get; private set;}
 
     // temp
     private float timeSinceEnemySpawn;
@@ -25,7 +25,9 @@ public class BattlefieldController : MonoBehaviour
         }
         battlefieldGrid = GetComponentInChildren<BattlefieldGrid>();
         player = GetComponentInChildren<Player>();
+        // init events
         BattlefieldEventManager.instance.TowerPlaced += PlaceTower;
+        BattlefieldEventManager.instance.TowerDestroyed += TowerDestroyed;
         //load towers
         Towers.LoadTowers();
         //load enemies
@@ -65,11 +67,12 @@ public class BattlefieldController : MonoBehaviour
                 cell.type = CellType.Ground;
                 if (x==width/2 && y==width/2)
                 {
-                    cell.type = CellType.Homebase;
+                    cell.type = CellType.Tower;
                 }
                 this.state[x,y] = cell;
             }
         }
+        BattlefieldEventManager.instance.OnSetHomebase(new Vector3Int(width/2, height/2, 0));
         DrawGrid();
     }
 
@@ -84,7 +87,13 @@ public class BattlefieldController : MonoBehaviour
         DrawGrid();
     }
 
-    
+    private void TowerDestroyed(GameObject tower)
+    {
+        Vector3Int location = tower.GetComponent<Tower>().location;
+        this.state[location.x, location.y].type = CellType.Ground;
+        DrawGrid();
+    }
+
     public bool IsInGrid(Vector3Int position)
     {
         return position.x >= 0 && position.x < width && position.y >= 0 && position.y < height;

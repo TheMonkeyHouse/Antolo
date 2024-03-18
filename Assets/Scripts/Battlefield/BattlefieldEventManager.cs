@@ -17,16 +17,25 @@ public class BattlefieldEventManager : MonoBehaviour
         }
     }
 
+    public event Action<Vector3Int> SetHomebase;
     public event Action RedrawScreenTriggered;
     public event Action TowerDeselected;
     public event Action<TowerBlueprint> TowerBlueprintSelected;
     public event Action<TowerBlueprint, Vector3Int> TowerPlaced;
+    public event Action<GameObject> EnemyDestroyed;
+    public event Action<GameObject> TowerDestroyed;
+    public event Action HomebaseDestroyed;
 
     // more events added here
 
     public void OnRedrawScreen()
     {
         RedrawScreenTriggered?.Invoke();
+    }
+
+    public void OnSetHomebase(Vector3Int location)
+    {
+        SetHomebase?.Invoke(location);
     }
 
     public void OnTowerDeselected()
@@ -42,5 +51,18 @@ public class BattlefieldEventManager : MonoBehaviour
     public void OnTowerPlaced(TowerBlueprint towerBlueprint, Vector3Int location)
     {
         TowerPlaced?.Invoke(towerBlueprint, location);
+    }
+
+    public void OnEnemyDestroyed(GameObject enemy)
+    {
+        EnemyDestroyed?.Invoke(enemy);
+    }
+    public void OnTowerDestroyed(GameObject tower)
+    {
+        TowerDestroyed?.Invoke(tower);
+    }
+    public void OnHomebaseDestroyed()
+    {
+        HomebaseDestroyed?.Invoke();
     }
 }

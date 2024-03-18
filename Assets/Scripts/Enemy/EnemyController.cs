@@ -7,16 +7,10 @@ public class EnemyController : MonoBehaviour
 
     public GameObject enemyPrefab;
     public List<GameObject> enemiesOnScreen;
-    // Start is called before the first frame update
-    void Start()
+    
+    private void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        BattlefieldEventManager.instance.EnemyDestroyed += EnemyDestroyed;
     }
 
     private Vector3 GetRandomSpawnPoint()
@@ -48,6 +42,11 @@ public class EnemyController : MonoBehaviour
             return new Vector3(randomWidth, BattlefieldController.instance.height + 1,0);
         }
         
+    }
+
+    private void EnemyDestroyed(GameObject enemy)
+    {
+        this.enemiesOnScreen.Remove(enemy);
     }
 
     public void SpawnEnemy()

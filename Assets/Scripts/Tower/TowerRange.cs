@@ -6,6 +6,11 @@ public class TowerRange : MonoBehaviour
 {
     private List<GameObject> enemiesInRange = new List<GameObject>();
 
+    private void Awake()
+    {
+        BattlefieldEventManager.instance.EnemyDestroyed += EnemyDestroyed;
+    }
+    
     private void OnTriggerEnter2D(Collider2D col){
         if (!col.gameObject.CompareTag("Enemy"))
         {
@@ -29,6 +34,11 @@ public class TowerRange : MonoBehaviour
             return null;
         }
         return enemiesInRange[0];
+    }
+
+    private void EnemyDestroyed(GameObject enemy)
+    {
+        this.enemiesInRange.Remove(enemy);
     }
 
     public void SetRadius(float radius)

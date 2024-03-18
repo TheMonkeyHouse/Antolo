@@ -8,6 +8,10 @@ public class HitscanAttackingTower : Tower {
     private TowerRange towerRange;
     [SerializeField]
     private GameObject towerSprite;
+
+    public float damage {get; private set;}
+    public float attackSpeed {get; private set;}
+    public float attackRange {get; private set;}
     
     void Awake()
     {
@@ -43,9 +47,12 @@ public class HitscanAttackingTower : Tower {
         target.GetComponent<Enemy>().TakeDamage(this.damage);
     }
 
-    public override void Initialize(TowerBlueprint towerBlueprint)
+    public override void Initialize(TowerBlueprint towerBlueprint, Vector3Int location)
     {
-        base.Initialize(towerBlueprint);
+        base.Initialize(towerBlueprint, location);
+        this.damage = towerBlueprint.baseStats["damage"];
+        this.attackSpeed = towerBlueprint.baseStats["attackSpeed"];
+        this.attackRange = towerBlueprint.baseStats["attackRange"];
         towerRange.SetRadius(towerBlueprint.baseStats["attackRange"]);
     }
 }

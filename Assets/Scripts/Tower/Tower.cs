@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
-    public string towerName;
-    public string description;
-    public string towerType;
+    public string towerName {get; private set;}
+    public string description {get; private set;}
+    public string towerType {get; private set;}
     [SerializeField]
     private SpriteRenderer sr;
     [SerializeField]
     private HealthBar healthBar;
     public float health {get; private set;}
-    public float damage {get; private set;}
-    public float attackSpeed {get; private set;}
-    public float attackRange {get; private set;}
+    public Vector3Int location  {get; private set;}
     
 
     private void Awake()
@@ -46,18 +44,17 @@ public class Tower : MonoBehaviour
 
     private void Die()
     {
+        BattlefieldEventManager.instance.OnTowerDestroyed(this.gameObject);
         Destroy(this.gameObject);
     }
 
-    public virtual void Initialize(TowerBlueprint towerBlueprint)
+    public virtual void Initialize(TowerBlueprint towerBlueprint, Vector3Int location)
     {
         this.towerName = towerBlueprint.towerName;
         this.description = towerBlueprint.description;
         this.towerType = towerBlueprint.towerType;
         this.health = towerBlueprint.baseStats["health"];
-        this.damage = towerBlueprint.baseStats["damage"];
-        this.attackSpeed = towerBlueprint.baseStats["attackSpeed"];
-        this.attackRange = towerBlueprint.baseStats["attackRange"];
+        this.location = location;
         healthBar.InitHealthBar(this.health);
     }
 }
