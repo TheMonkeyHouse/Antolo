@@ -40,7 +40,7 @@ public class BattlefieldController : MonoBehaviour
     private void NewArena()
     {
         Camera.main.transform.position = new Vector3(width / 2f, height/ 2f, -10.0f);
-        Camera.main.orthographicSize = width*0.8f;
+        Camera.main.orthographicSize = width*0.6f;
         state = new Cell[width,height];
         for (int x=0; x< width; x++)
         {
