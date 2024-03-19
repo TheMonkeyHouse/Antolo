@@ -20,14 +20,17 @@ public class HitscanAttackingTower : Tower {
     }
     void Update()
     {
-        GameObject target = towerRange.GetTarget();
-        this.timeSinceLastAttack += Time.deltaTime;
+        List<GameObject> targets = towerRange.GetTargets();
+        // if no targets, then idle
         
-        // if no target, then idle
-        if (target == null)
+        if (targets.Count == 0)
         {
             return;
         }
+
+        GameObject target = targets[0];
+        
+        this.timeSinceLastAttack += Time.deltaTime;
 
         // rotate towards
         float angle = Mathf.Atan2(target.transform.position.y - transform.position.y, target.transform.position.x -transform.position.x ) * Mathf.Rad2Deg - 90;

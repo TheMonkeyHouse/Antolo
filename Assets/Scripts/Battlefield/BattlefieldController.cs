@@ -67,8 +67,18 @@ public class BattlefieldController : MonoBehaviour
         battlefieldGrid.DrawGrid(state);
     }
 
+    public void PlaceWall(TowerBlueprint towerBlueprint, Vector3Int position)
+    {
+        this.state[position.x, position.y].type = CellType.Wall;
+        DrawGrid();
+    }
+
     public void PlaceTower(TowerBlueprint towerBlueprint, Vector3Int position)
     {
+        if (this.state[position.x, position.y].type == CellType.Wall)
+        {
+            return;
+        }
         this.state[position.x, position.y].type = CellType.Tower;
         DrawGrid();
     }
@@ -90,7 +100,7 @@ public class BattlefieldController : MonoBehaviour
 
     public Wave MakeNewWave()
     {
-        float rating = currentWave*2 + 1; // wave scaling function = 15x^(3) + 15 O(x^1.5)
+        float rating = Mathf.Pow(currentWave, 1.5f)*2.0f + 1.0f; // wave scaling function = 15x^(3) + 15 O(x^1.5)
         EnemyBlueprint[] possibleChoices = new EnemyBlueprint[] {Enemies.enemyBlueprints["BasicEnemy"]};
         float[] weights = new float[] {1.0f};
         return new Wave(rating, possibleChoices, weights);

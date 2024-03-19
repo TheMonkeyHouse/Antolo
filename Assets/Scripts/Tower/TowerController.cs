@@ -8,11 +8,25 @@ public class TowerController : MonoBehaviour
     [SerializeField] private GameObject homebaseTowerPrefab;
     [SerializeField] private GameObject machineGunTowerPrefab;
     [SerializeField] private GameObject sniperTowerPrefab;
+    [SerializeField] private GameObject basicWallPrefab;
+    [SerializeField] private GameObject spikeTrapPrefab;
+    private Dictionary<string, GameObject> prefabDict;
+    
 
     void Awake()
     {
+        prefabDict = new Dictionary<string, GameObject>(){
+            { "Tower"  , towerPrefab },
+            { "Homebase" , homebaseTowerPrefab },
+            { "Machine Gun Tower" , machineGunTowerPrefab },
+            { "Sniper Tower" , sniperTowerPrefab },
+            { "Basic Wall" , basicWallPrefab },
+            { "Spike Trap" , spikeTrapPrefab }
+        };
+        
         BattlefieldEventManager.instance.SetHomebase += SetHomebase;
         BattlefieldEventManager.instance.TowerPlaced += PlaceTower;
+        BattlefieldEventManager.instance.WallPlaced += PlaceWall;
     }
 
     void SetHomebase(Vector3Int location)
@@ -24,28 +38,15 @@ public class TowerController : MonoBehaviour
 
     void PlaceTower(TowerBlueprint towerBlueprint, Vector3Int location)
     {
-        GameObject newTowerGO;
-        Tower newTower;
-        switch (towerBlueprint.towerName)
-        {
-            case "Homebase":
-                newTowerGO = Instantiate(homebaseTowerPrefab, gameObject.transform);
-                newTower = newTowerGO.GetComponent<Tower>();
-                break;
-            case "Machine Gun Tower":
-                newTowerGO = Instantiate(machineGunTowerPrefab, gameObject.transform);
-                newTower = newTowerGO.GetComponentInChildren<HitscanAttackingTower>();
-                break;
-            case "Sniper Tower":
-                newTowerGO = Instantiate(sniperTowerPrefab, gameObject.transform);
-                newTower = newTowerGO.GetComponentInChildren<HitscanAttackingTower>();
-                break;
-            default:
-                newTowerGO = Instantiate(towerPrefab, gameObject.transform);
-                newTower = newTowerGO.GetComponent<Tower>();
-                break;
-        }
+        GameObject newTowerGO = Instantiate(prefabDict[towerBlueprint.towerName], gameObject.transform);
         newTowerGO.transform.position = new Vector3(location.x, location.y, 0);
-        newTower.Initialize(towerBlueprint, location);
+        newTowerGO.GetComponent<Tower>().Initialize(towerBlueprint, location);
+    }
+
+    void PlaceWall(TowerBlueprint towerBlueprint, Vector3Int location)
+    {
+        GameObject newWallGO = Instantiate(prefabDict[towerBlueprint.towerName], gameObject.transform);
+        newWallGO.transform.position = new Vector3(location.x, location.y, 0);
+        newWallGO.GetComponent<Wall>().Initialize(towerBlueprint, location);
     }
 }

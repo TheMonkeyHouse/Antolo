@@ -483,7 +483,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6655561952258277874}
-  - component: {fileID: 7320511336136913526}
+  - component: {fileID: 7735542399006115167}
   - component: {fileID: 7528623868969390023}
   - component: {fileID: 8053305830504892159}
   m_Layer: 0
@@ -511,7 +511,7 @@ Transform:
   - {fileID: 1708097645750049382}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7320511336136913526
+--- !u!114 &7735542399006115167
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -520,12 +520,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8954351768412878749}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13b00b31c06ced14f9e94f6045e6994b, type: 3}
+  m_Script: {fileID: 11500000, guid: 3fca96238485d3a4f8011846613dc075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerName: 
-  description: 
-  towerType: 
   sr: {fileID: 4938708913981148893}
   healthBar: {fileID: 7202058859534827020}
 --- !u!61 &7528623868969390023

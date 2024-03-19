@@ -5,9 +5,9 @@
         "baseStats" :
         {
             "health" : 50,
-            "speed" : 0.5,
+            "speed" : 1,
             "size" : 1,
-            "damage" : 2,
+            "damage" : 5,
             "attackSpeed" : 2,
             "rating" : 1
         }

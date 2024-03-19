@@ -30,6 +30,7 @@ public class Enemy : MonoBehaviour
         sr = GetComponentInChildren<SpriteRenderer>();
         healthBar = GetComponentInChildren<HealthBar>();
         BattlefieldEventManager.instance.TowerDestroyed += TowerDestroyed;
+        BattlefieldEventManager.instance.WallDestroyed += TowerDestroyed;
         GetPath();
     }
 
@@ -72,6 +73,10 @@ public class Enemy : MonoBehaviour
         {
             currentTargets.Add(col.gameObject);
         }
+        if (col.gameObject.CompareTag("Wall"))
+        {
+            currentTargets.Add(col.gameObject);
+        }
     }
 
     private GameObject GetTarget()
@@ -80,9 +85,16 @@ public class Enemy : MonoBehaviour
         {
             return null;
         }
+        // target wall > tower > base
         foreach (GameObject target in currentTargets)
         {
-            // target towers over base
+            if (target.CompareTag("Wall"))
+            {
+                return target;
+            }
+        }
+        foreach (GameObject target in currentTargets)
+        {
             if (target.CompareTag("Tower"))
             {
                 return target;
@@ -94,7 +106,7 @@ public class Enemy : MonoBehaviour
     private void Attack(GameObject target)
     {
         // animation + other effects
-        target.GetComponent<Tower>().TakeDamage(damage);
+        target.GetComponent<BaseTower>().TakeDamage(damage);
     }
 
     public void TakeDamage(float dmg)

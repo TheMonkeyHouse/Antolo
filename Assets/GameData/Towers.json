@@ -14,7 +14,7 @@
         "towerType" : "HitscanAttackingTower",
         "baseStats" : {
             "health" : 100.0,
-            "damage" : 1.0,
+            "damage" : 4.0,
             "attackSpeed" : 2.0,
             "attackRange" : 3.0,
             "rotationSpeed" : 360,
@@ -28,10 +28,52 @@
         "baseStats" : {
             "health" : 50.0,
             "damage" : 15.0,
-            "attackSpeed" : 0.25,
+            "attackSpeed" : 0.4,
             "attackRange" : 12.0,
             "rotationSpeed" : 720,
             "cost" : 200
+        }
+    },
+    "BasicWall" : {
+        "towerName" : "Basic Wall",
+        "description" : "Tanks enemy attacks. Can place towers on top to give extra range",
+        "towerType" : "Wall",
+        "baseStats" : {
+            "health" : 250,
+            "cost" : 150
+        }
+    },
+    "SpikeTrap" : {
+        "towerName" : "Spike Trap",
+        "description" : "Untargettable by meelee enemies. Does damage to enemies that walk on top.",
+        "towerType" : "AOEAttackingTower",
+        "baseStats" : {
+            "health" : 50.0,
+            "damage" : 1,
+            "attackSpeed" : 4.0,
+            "attackRange" : 0.4,
+            "cost" : 200
+        }
+    },
+    "HealingTower" : {
+        "towerName" : "Healing Tower",
+        "description" : "Slowly heals all towers in range",
+        "towerType" : "Support",
+        "baseStats" : {
+            "health" : 200.0,
+            "healing" : 3.0,
+            "healSpeed" : 1.0,
+            "healRange" : 0.5,
+            "cost" : 450
+        }
+    },
+    "RoundIncomeTower" : {
+        "towerName" : "Round Income Tower",
+        "description" : "Generates 800 at the end of each round (if alive)",
+        "towerType" : "Income",
+        "baseStats" : {
+            "health" : 150.0,
+            "cost" : 1000
         }
     }
 }

@@ -44,7 +44,14 @@ public class GridController : MonoBehaviour
             {
                 if (isPlaceable(selectedTower, mousePos))
                 {
-                    BattlefieldEventManager.instance.OnTowerPlaced(selectedTower, mousePos);
+                    if (selectedTower.towerType == "Wall")
+                    {
+                        BattlefieldEventManager.instance.OnWallPlaced(selectedTower, mousePos);
+                    }
+                    else
+                    {
+                        BattlefieldEventManager.instance.OnTowerPlaced(selectedTower, mousePos);
+                    }
                     
                 }
             }
@@ -87,6 +94,10 @@ public class GridController : MonoBehaviour
             return false;
         }
         if (BattlefieldController.instance.state[pos.x,pos.y].type == CellType.Tower)
+        {
+            return false;
+        }
+        if (BattlefieldController.instance.state[pos.x,pos.y].type == CellType.Wall && towerBlueprint.towerType == "Wall")
         {
             return false;
         }

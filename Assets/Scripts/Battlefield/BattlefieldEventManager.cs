@@ -22,8 +22,10 @@ public class BattlefieldEventManager : MonoBehaviour
     public event Action TowerDeselected;
     public event Action<TowerBlueprint> TowerBlueprintSelected;
     public event Action<TowerBlueprint, Vector3Int> TowerPlaced;
+    public event Action<TowerBlueprint, Vector3Int> WallPlaced;
     public event Action<GameObject> EnemyDestroyed;
     public event Action<GameObject> TowerDestroyed;
+    public event Action<GameObject> WallDestroyed;
     public event Action HomebaseDestroyed;
     public event Action StartNewWave;
     public event Action WaveFinishedSpawning;
@@ -57,6 +59,10 @@ public class BattlefieldEventManager : MonoBehaviour
     {
         TowerPlaced?.Invoke(towerBlueprint, location);
     }
+    public void OnWallPlaced(TowerBlueprint towerBlueprint, Vector3Int location)
+    {
+        WallPlaced?.Invoke(towerBlueprint, location);
+    }
 
     public void OnEnemyDestroyed(GameObject enemy)
     {
@@ -65,6 +71,10 @@ public class BattlefieldEventManager : MonoBehaviour
     public void OnTowerDestroyed(GameObject tower)
     {
         TowerDestroyed?.Invoke(tower);
+    }
+    public void OnWallDestroyed(GameObject wall)
+    {
+        WallDestroyed?.Invoke(wall);
     }
     public void OnHomebaseDestroyed()
     {

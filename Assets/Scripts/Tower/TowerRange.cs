@@ -26,14 +26,9 @@ public class TowerRange : MonoBehaviour
         enemiesInRange.Remove(col.gameObject);
     }
 
-    public GameObject GetTarget()
+    public List<GameObject> GetTargets()
     {
-        // targeting function, for now furthest along the track, should be first in list
-        if (enemiesInRange.Count == 0)
-        {
-            return null;
-        }
-        return enemiesInRange[0];
+        return new List<GameObject>(enemiesInRange);
     }
 
     private void EnemyDestroyed(GameObject enemy)
