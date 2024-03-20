@@ -62,7 +62,7 @@ public class Enemy : MonoBehaviour, IPointerDownHandler
         // choose target by probability of inverse distance to center
         // for now just attack base
         pathing = new List<Vector3>();
-        pathing.Add(new Vector3(BattlefieldController.instance.width/2f, BattlefieldController.instance.height/2f, 0));
+        pathing.Add(new Vector3(BattlefieldController.instance.width/2, BattlefieldController.instance.height/2, 0));
     }
 
     // check for tower attack

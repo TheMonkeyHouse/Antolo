@@ -68,12 +68,14 @@
         }
     },
     "RoundIncomeTower" : {
-        "towerName" : "Round Income Tower",
-        "description" : "Generates 800 at the end of each round (if alive)",
-        "towerType" : "Income",
+        "towerName" : "Energy Generator",
+        "description" : "Generates 50 energy every 5 seconds during the wave",
+        "towerType" : "EnergyGenerating",
         "baseStats" : {
             "health" : 150.0,
-            "energyCost" : 1000
+            "energyCost" : 250,
+            "energyAmount" : 50,
+            "generationSpeed" : 0.2
         }
     }
 }
