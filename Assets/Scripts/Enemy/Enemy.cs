@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IPointerDownHandler
 {
+    public string enemyName {get; private set;}
     private HealthBar healthBar;
     private SpriteRenderer sr;
     private List<GameObject> currentTargets;
@@ -139,8 +141,14 @@ public class Enemy : MonoBehaviour
         currentTargets.Remove(tower);
     }
 
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        Debug.Log("Clicked: " + enemyName);
+    }
+
     public void Initialize(EnemyBlueprint enemyBlueprint)
     {
+        this.enemyName = enemyBlueprint.enemyName;
         this.health = enemyBlueprint.baseStats["health"];
         this.speed = enemyBlueprint.baseStats["speed"];
         this.size = enemyBlueprint.baseStats["size"];

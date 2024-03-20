@@ -9,7 +9,7 @@ public class BattlefieldController : MonoBehaviour
     private BattlefieldGrid battlefieldGrid;
     public int width = 5;
     public int height = 5;
-    public Player player;
+    public Player player {get; private set;}
     public Cell[,] state {get; private set;}
     private int currentWave;
     private void Awake()

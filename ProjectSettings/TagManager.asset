@@ -9,6 +9,7 @@ TagManager:
   - Homebase
   - Wall
   - Spikes
+  - TowerRange
   layers:
   - Default
   - TransparentFX

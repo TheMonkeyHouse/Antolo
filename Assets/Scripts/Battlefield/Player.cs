@@ -5,10 +5,11 @@ using UnityEngine.UI;
 using TMPro;
 public class Player : MonoBehaviour
 {
-    public int money {get; private set;}
+    public int startingEnergy {get; private set;}
+    public int energy {get; private set;}
     public int level {get; private set;}
     private TowerBlueprint[] towerBlueprints;
-    [SerializeField] private TMP_Text moneyDisplay;
+    [SerializeField] private TMP_Text energyDisplay;
     [SerializeField] private TMP_Text levelDisplay;
     
     // Associated Buttons
@@ -20,18 +21,20 @@ public class Player : MonoBehaviour
     [SerializeField] private TowerSelector supportTower2Button;
 
     public TowerBlueprint selectedTower {get; private set;}
+    public bool deleteTowerSelected {get; private set;}
 
     void Awake()
     {
         towerBlueprints = new TowerBlueprint[6];
         BattlefieldEventManager.instance.TowerBlueprintSelected += SelectTower;
-        BattlefieldEventManager.instance.TowerDeselected += DeselectTower;
+        BattlefieldEventManager.instance.DeleteTowerSelected += DeleteTowerSelected;
+        BattlefieldEventManager.instance.Deselect += Deselect;
         BattlefieldEventManager.instance.TowerPlaced += TowerPlaced;
         BattlefieldEventManager.instance.WallPlaced += WallPlaced;
         BattlefieldEventManager.instance.StartNewWave += StartNewWave;
-        BattlefieldEventManager.instance.EnemyDestroyed += EnemyDestroyed;
         BattlefieldEventManager.instance.WaveCleared += WaveCleared;
         selectedTower = null;
+        deleteTowerSelected = false;
     }
 
     void SelectTower(TowerBlueprint towerBlueprint)
@@ -39,14 +42,20 @@ public class Player : MonoBehaviour
         selectedTower = towerBlueprint;
     }
 
-    void DeselectTower()
+    void DeleteTowerSelected()
     {
-        selectedTower = null;
+        deleteTowerSelected = true;
     }
 
-    private void UpdateMoneyDisplay()
+    void Deselect()
     {
-        moneyDisplay.text = money.ToString("N0");
+        selectedTower = null;
+        deleteTowerSelected = false;
+    }
+
+    private void UpdateEnergyDisplay()
+    {
+        energyDisplay.text = energy.ToString();
     }
 
     private void UpdateLevelDisplay()
@@ -66,32 +75,28 @@ public class Player : MonoBehaviour
 
     void TowerPlaced(TowerBlueprint towerBlueprint, Vector3Int position)
     {
-        money -= (int) towerBlueprint.baseStats["cost"];
-        UpdateMoneyDisplay();
+        energy -= (int) towerBlueprint.baseStats["energyCost"];
+        UpdateEnergyDisplay();
     }
     void WallPlaced(TowerBlueprint towerBlueprint, Vector3Int position)
     {
-        money -= (int) towerBlueprint.baseStats["cost"];
-        UpdateMoneyDisplay();
-    }
-    void EnemyDestroyed(GameObject enemy)
-    {
-        money = money + 50;
-        UpdateMoneyDisplay();
+        energy -= (int) towerBlueprint.baseStats["energyCost"];
+        UpdateEnergyDisplay();
     }
     void WaveCleared()
     {
-        money = money + 250;
-        UpdateMoneyDisplay();
+        energy = startingEnergy;
+        UpdateEnergyDisplay();
     }
     void StartNewWave()
     {
         level = level+1;
         UpdateLevelDisplay();
     }
-    public void Initialize(int startingMoney, int level)
+    public void Initialize(int startingEnergy, int level)
     {
-        this.money = startingMoney;
+        this.startingEnergy = startingEnergy;
+        this.energy = startingEnergy;
         this.level = level;
         this.towerBlueprints[0] = Towers.towerBlueprints["MachineGunTower"];
         this.towerBlueprints[1] = Towers.towerBlueprints["SniperTower"];
@@ -100,7 +105,7 @@ public class Player : MonoBehaviour
         this.towerBlueprints[4] = Towers.towerBlueprints["HealingTower"];
         this.towerBlueprints[5] = Towers.towerBlueprints["RoundIncomeTower"];
         UpdateButtons();
-        UpdateMoneyDisplay();
+        UpdateEnergyDisplay();
         UpdateLevelDisplay();
     }
 }

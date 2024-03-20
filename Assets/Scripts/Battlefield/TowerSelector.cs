@@ -13,7 +13,7 @@ public class TowerSelector : MonoBehaviour
     void Awake()
     {
         isSelected = false;
-        BattlefieldEventManager.instance.TowerDeselected += Deselect;
+        BattlefieldEventManager.instance.Deselect += Deselect;
     }
 
     public void Deselect()
@@ -29,7 +29,7 @@ public class TowerSelector : MonoBehaviour
         }
         else
         {
-            BattlefieldEventManager.instance.OnTowerDeselected();
+            BattlefieldEventManager.instance.OnDeselect();
         }
         isSelected = !isSelected;
     }
@@ -38,6 +38,6 @@ public class TowerSelector : MonoBehaviour
     {
         this.towerBlueprint = towerBlueprint;
         this.buttonText.text = towerBlueprint.towerName;
-        this.priceText.text = ((int) towerBlueprint.baseStats["cost"]).ToString();
+        this.priceText.text = ((int) towerBlueprint.baseStats["energyCost"]).ToString();
     }
 }

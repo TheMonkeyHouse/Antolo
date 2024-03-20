@@ -57,7 +57,7 @@ public class GridController : MonoBehaviour
             }
             
             // deselect
-            BattlefieldEventManager.instance.OnTowerDeselected();
+            BattlefieldEventManager.instance.OnDeselect();
             
             // update highlight
             if (BattlefieldController.instance.IsInGrid(mousePos))
@@ -101,7 +101,7 @@ public class GridController : MonoBehaviour
         {
             return false;
         }
-        if (BattlefieldController.instance.player.money < towerBlueprint.baseStats["cost"])
+        if (BattlefieldController.instance.player.energy < towerBlueprint.baseStats["energyCost"])
         {
             return false;
         }

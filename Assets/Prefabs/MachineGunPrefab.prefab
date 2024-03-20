@@ -492,7 +492,7 @@ GameObject:
   - component: {fileID: 6121078368871194545}
   - component: {fileID: 2279334654990464142}
   - component: {fileID: 3584022902245556075}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: TowerRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -639,6 +639,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba236800a8bb5445861c1473afd7981, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  physicsRaycaster: {fileID: 0}
   sr: {fileID: 3495960086509326218}
   healthBar: {fileID: 2818011643600587556}
   towerRange: {fileID: 3584022902245556075}

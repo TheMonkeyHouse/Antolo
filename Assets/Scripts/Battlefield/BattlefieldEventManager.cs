@@ -19,8 +19,9 @@ public class BattlefieldEventManager : MonoBehaviour
 
     public event Action<Vector3Int> SetHomebase;
     public event Action RedrawScreenTriggered;
-    public event Action TowerDeselected;
+    public event Action Deselect;
     public event Action<TowerBlueprint> TowerBlueprintSelected;
+    public event Action DeleteTowerSelected;
     public event Action<TowerBlueprint, Vector3Int> TowerPlaced;
     public event Action<TowerBlueprint, Vector3Int> WallPlaced;
     public event Action<GameObject> EnemyDestroyed;
@@ -45,14 +46,19 @@ public class BattlefieldEventManager : MonoBehaviour
         SetHomebase?.Invoke(location);
     }
 
-    public void OnTowerDeselected()
+    public void OnDeselect()
     {
-        TowerDeselected?.Invoke();
+        Deselect?.Invoke();
     }
 
     public void OnTowerBlueprintSelected(TowerBlueprint towerBlueprint)
     {
         TowerBlueprintSelected?.Invoke(towerBlueprint);
+    }
+
+    public void OnDeleteTowerSelected()
+    {
+        DeleteTowerSelected?.Invoke();
     }
 
     public void OnTowerPlaced(TowerBlueprint towerBlueprint, Vector3Int location)

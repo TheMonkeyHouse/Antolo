@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 4001077356282138960}
   - component: {fileID: 495008530850158845}
   - component: {fileID: 6371923835900903540}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: TowerRange
-  m_TagString: Untagged
+  m_TagString: TowerRange
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -498,7 +498,7 @@ GameObject:
   - component: {fileID: 9127956936524947385}
   - component: {fileID: 100295212294682493}
   - component: {fileID: 4892993242497496252}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}

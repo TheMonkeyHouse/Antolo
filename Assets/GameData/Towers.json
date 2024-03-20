@@ -5,7 +5,7 @@
         "towerType" : "Homebase",
         "baseStats" : {
             "health" : 200,
-            "cost" : 0
+            "energyCost" : 0
         }
     },
     "MachineGunTower" : {
@@ -18,7 +18,7 @@
             "attackSpeed" : 2.0,
             "attackRange" : 3.0,
             "rotationSpeed" : 360,
-            "cost" : 350
+            "energyCost" : 350
         }
     },
     "SniperTower" : {
@@ -31,7 +31,7 @@
             "attackSpeed" : 0.4,
             "attackRange" : 12.0,
             "rotationSpeed" : 720,
-            "cost" : 200
+            "energyCost" : 200
         }
     },
     "BasicWall" : {
@@ -40,7 +40,7 @@
         "towerType" : "Wall",
         "baseStats" : {
             "health" : 250,
-            "cost" : 150
+            "energyCost" : 150
         }
     },
     "SpikeTrap" : {
@@ -52,7 +52,7 @@
             "damage" : 1,
             "attackSpeed" : 4.0,
             "attackRange" : 0.4,
-            "cost" : 200
+            "energyCost" : 200
         }
     },
     "HealingTower" : {
@@ -64,7 +64,7 @@
             "healing" : 3.0,
             "healSpeed" : 1.0,
             "healRange" : 0.5,
-            "cost" : 450
+            "energyCost" : 450
         }
     },
     "RoundIncomeTower" : {
@@ -73,7 +73,7 @@
         "towerType" : "Income",
         "baseStats" : {
             "health" : 150.0,
-            "cost" : 1000
+            "energyCost" : 1000
         }
     }
 }

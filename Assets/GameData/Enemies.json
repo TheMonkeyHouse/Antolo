@@ -1,6 +1,6 @@
 {
     "BasicEnemy" : {
-        "name" : "Basic Enemy",
+        "enemyName" : "Basic Enemy",
         "description" : "basic enemy",
         "baseStats" :
         {

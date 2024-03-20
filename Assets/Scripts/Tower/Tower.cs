@@ -6,6 +6,7 @@ public class Tower : BaseTower
 {
     public override void Die()
     {
+        BattlefieldEventManager.instance.WallDestroyed -= WallDestroyed;
         BattlefieldEventManager.instance.OnTowerDestroyed(this.gameObject);
         Destroy(this.gameObject);
     }
@@ -24,4 +25,5 @@ public class Tower : BaseTower
         base.Initialize(towerBlueprint, location);
         BattlefieldEventManager.instance.WallDestroyed += WallDestroyed;
     }
+    
 }

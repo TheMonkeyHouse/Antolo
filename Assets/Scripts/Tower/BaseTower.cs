@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class BaseTower : MonoBehaviour
+public class BaseTower : MonoBehaviour, IPointerDownHandler
 {
     public string towerName {get; private set;}
     public string description {get; private set;}
@@ -34,7 +35,6 @@ public class BaseTower : MonoBehaviour
 
     public virtual void Die()
     {
-        Destroy(this.gameObject);
     }
 
     public void Heal(float heal)
@@ -49,6 +49,16 @@ public class BaseTower : MonoBehaviour
         this.healthBar.UpdateCurrentHealth(health);
     }
 
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        Debug.Log("Clicked: " + towerName);
+        if (BattlefieldController.instance.player.deleteTowerSelected)
+        {
+            Die();
+            return;
+        }
+    }
+
     public virtual void Initialize(TowerBlueprint towerBlueprint, Vector3Int location)
     {
         BattlefieldEventManager.instance.WaveCleared += HealFull;
@@ -60,4 +70,6 @@ public class BaseTower : MonoBehaviour
         this.location = location;
         healthBar.InitHealthBar(this.health);
     }
+
+    
 }
