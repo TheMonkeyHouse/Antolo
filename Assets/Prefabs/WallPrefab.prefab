@@ -385,6 +385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sr: {fileID: 1739409654683466701}
+  floatingTextPrefab: {fileID: 3093657639401569194, guid: 7c7781fe4a745b041a91d34dcfe289a2, type: 3}
   healthBar: {fileID: 5755478791333158263}
 --- !u!61 &133427661422243540
 BoxCollider2D:

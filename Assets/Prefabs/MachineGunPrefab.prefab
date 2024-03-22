@@ -639,8 +639,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ba236800a8bb5445861c1473afd7981, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  physicsRaycaster: {fileID: 0}
   sr: {fileID: 3495960086509326218}
+  floatingTextPrefab: {fileID: 3093657639401569194, guid: 7c7781fe4a745b041a91d34dcfe289a2, type: 3}
   healthBar: {fileID: 2818011643600587556}
   towerRange: {fileID: 3584022902245556075}
   towerSprite: {fileID: 2870322779786641691}

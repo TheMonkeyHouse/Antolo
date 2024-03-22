@@ -44,8 +44,8 @@ public class AOEAttackingTower : Tower {
         base.Initialize(towerBlueprint, location);
         this.damage = towerBlueprint.baseStats["damage"];
         this.attackSpeed = towerBlueprint.baseStats["attackSpeed"];
-        this.attackRange = towerBlueprint.baseStats["attackRange"];
+        this.attackRange = towerBlueprint.baseStats["towerRange"];
         this.timeSinceLastAttack = 1f / this.attackSpeed;
-        towerRange.SetRadius(towerBlueprint.baseStats["attackRange"]);
+        towerRange.SetRadius(towerBlueprint.baseStats["towerRange"]);
     }
 }

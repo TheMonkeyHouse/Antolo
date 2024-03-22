@@ -2315,6 +2315,8 @@ MonoBehaviour:
   sniperTowerPrefab: {fileID: 8738327928652027460, guid: 947318319a83bba4eae29d3d9754aaa6, type: 3}
   basicWallPrefab: {fileID: 6937401601982927768, guid: 94bc07b0d9bb5da498b0bf77bca40e9d, type: 3}
   spikeTrapPrefab: {fileID: 3964682001589457294, guid: c189ae034898f2f4696b2f81a780148b, type: 3}
+  healingTowerPrefab: {fileID: 155580237640879325, guid: f8addf4968848714aa422be5a1716599, type: 3}
+  energyTowerPrefab: {fileID: 7581575892600203226, guid: a2a4b6efec1e28d4fb02212c4ecb5f70, type: 3}
 --- !u!1 &737473887
 GameObject:
   m_ObjectHideFlags: 0
@@ -3778,7 +3780,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_EventMask:
     serializedVersion: 2
-    m_Bits: 51
+    m_Bits: 1
   m_MaxRayIntersections: 0
 --- !u!1 &1872144852
 GameObject:

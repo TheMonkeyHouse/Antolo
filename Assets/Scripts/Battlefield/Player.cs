@@ -53,6 +53,12 @@ public class Player : MonoBehaviour
         deleteTowerSelected = false;
     }
 
+    public void RecieveEnergy(int extraEnergy)
+    {
+        this.energy += extraEnergy;
+        UpdateEnergyDisplay();
+    }
+
     private void UpdateEnergyDisplay()
     {
         energyDisplay.text = energy.ToString();

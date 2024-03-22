@@ -9,6 +9,7 @@ public class BaseTower : MonoBehaviour, IPointerDownHandler
     public string description {get; private set;}
     [SerializeField] public string towerType {get; private set;}
     [SerializeField] private SpriteRenderer sr;
+    [SerializeField] private GameObject floatingTextPrefab;
     [SerializeField] private HealthBar healthBar;
     public float maxHP {get; private set;}
     public float health {get; private set;}
@@ -18,6 +19,8 @@ public class BaseTower : MonoBehaviour, IPointerDownHandler
     {
         StartCoroutine(DamageAnimator());
         health = health - dmg;
+        GameObject floatingText = Instantiate(floatingTextPrefab, this.gameObject.transform);
+        floatingText.GetComponent<FloatingText>().Initialize(0.5f, dmg.ToString(), Color.red);
         if (health <= 0)
         {
             Die();
@@ -39,7 +42,15 @@ public class BaseTower : MonoBehaviour, IPointerDownHandler
 
     public void Heal(float heal)
     {
-        this.health = Mathf.Min(this.maxHP, this.health + heal);
+        float newHealth = Mathf.Min(this.maxHP, this.health + heal);
+        float healAmount = newHealth - health;
+        if(healAmount == 0)
+        {
+            return;
+        }
+        GameObject floatingText = Instantiate(floatingTextPrefab, this.gameObject.transform);
+        floatingText.GetComponent<FloatingText>().Initialize(0.5f, healAmount.ToString(), Color.green);
+        this.health = newHealth;
         this.healthBar.UpdateCurrentHealth(health);
     }
 

@@ -10,6 +10,8 @@ public class TowerController : MonoBehaviour
     [SerializeField] private GameObject sniperTowerPrefab;
     [SerializeField] private GameObject basicWallPrefab;
     [SerializeField] private GameObject spikeTrapPrefab;
+    [SerializeField] private GameObject healingTowerPrefab;
+    [SerializeField] private GameObject energyTowerPrefab;
     private Dictionary<string, GameObject> prefabDict;
     
 
@@ -21,7 +23,9 @@ public class TowerController : MonoBehaviour
             { "Machine Gun Tower" , machineGunTowerPrefab },
             { "Sniper Tower" , sniperTowerPrefab },
             { "Basic Wall" , basicWallPrefab },
-            { "Spike Trap" , spikeTrapPrefab }
+            { "Spike Trap" , spikeTrapPrefab },
+            { "Healing Tower" , healingTowerPrefab },
+            { "Energy Generator" , energyTowerPrefab }
         };
         
         BattlefieldEventManager.instance.SetHomebase += SetHomebase;

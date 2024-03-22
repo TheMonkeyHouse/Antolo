@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TowerRange : MonoBehaviour
+public class AttackTowerRange : TowerRange
 {
     private List<GameObject> enemiesInRange = new List<GameObject>();
 
@@ -26,7 +26,7 @@ public class TowerRange : MonoBehaviour
         enemiesInRange.Remove(col.gameObject);
     }
 
-    public List<GameObject> GetTargets()
+    public override List<GameObject> GetTargets()
     {
         return new List<GameObject>(enemiesInRange);
     }
@@ -34,10 +34,5 @@ public class TowerRange : MonoBehaviour
     private void EnemyDestroyed(GameObject enemy)
     {
         this.enemiesInRange.Remove(enemy);
-    }
-
-    public void SetRadius(float radius)
-    {
-        gameObject.GetComponent<CircleCollider2D>().radius = radius;
     }
 }

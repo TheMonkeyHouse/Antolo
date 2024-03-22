@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour, IPointerDownHandler
 {
     public string enemyName {get; private set;}
     private HealthBar healthBar;
+    [SerializeField] private GameObject floatingTextPrefab;
     private SpriteRenderer sr;
     private List<GameObject> currentTargets;
     private float timeSinceLastAttack;
@@ -115,6 +116,8 @@ public class Enemy : MonoBehaviour, IPointerDownHandler
     {
         StartCoroutine(DamageAnimator());
         health = health - dmg;
+        GameObject floatingText = Instantiate(floatingTextPrefab, this.gameObject.transform);
+        floatingText.GetComponent<FloatingText>().Initialize(0.5f, dmg.ToString(), Color.red);
         if (health <= 0)
         {
             Die();

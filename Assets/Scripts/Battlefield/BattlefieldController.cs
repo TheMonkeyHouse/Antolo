@@ -3,6 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum BattlefieldPhase
+{
+    BuildPhase,
+    WaveSpawningPhase,
+    WaveClearingPhase,
+    UpgradePhase,
+    SelectItemPhase,
+    ModifyBlueprintsPhase
+}
+
 public class BattlefieldController : MonoBehaviour
 {
     public static BattlefieldController instance {get; private set;}
@@ -12,6 +22,7 @@ public class BattlefieldController : MonoBehaviour
     public Player player {get; private set;}
     public Cell[,] state {get; private set;}
     private int currentWave;
+    public BattlefieldPhase currentPhase {get; private set;}
     private void Awake()
     {
         if (instance == null)
@@ -59,6 +70,7 @@ public class BattlefieldController : MonoBehaviour
         BattlefieldEventManager.instance.OnSetHomebase(new Vector3Int(width/2, height/2, 0));
         player.Initialize(1000, 0);
         currentWave = 0;
+        currentPhase = BattlefieldPhase.BuildPhase;
         DrawGrid();
     }
 
@@ -90,15 +102,25 @@ public class BattlefieldController : MonoBehaviour
         DrawGrid();
     }
 
-    public void StartNewWave()
+    private void StartNewWave()
     {
         currentWave++;
         Wave newWave = MakeNewWave();
+        currentPhase = BattlefieldPhase.WaveSpawningPhase;
         print("starting wave " + currentWave);
         StartCoroutine(newWave.WaveSpawner());
     }
+    private void WaveFinishedSpawning()
+    {
+        currentPhase = BattlefieldPhase.WaveClearingPhase;
+    }
 
-    public Wave MakeNewWave()
+    private void WaveCleared()
+    {
+        currentPhase = BattlefieldPhase.BuildPhase;
+    }
+
+    private Wave MakeNewWave()
     {
         float rating = Mathf.Pow(currentWave, 1.5f)*2.0f + 1.0f; // wave scaling function = 15x^(3) + 15 O(x^1.5)
         EnemyBlueprint[] possibleChoices = new EnemyBlueprint[] {Enemies.enemyBlueprints["BasicEnemy"]};

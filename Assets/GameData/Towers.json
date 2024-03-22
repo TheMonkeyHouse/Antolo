@@ -16,7 +16,7 @@
             "health" : 100.0,
             "damage" : 4.0,
             "attackSpeed" : 2.0,
-            "attackRange" : 3.0,
+            "towerRange" : 3.0,
             "rotationSpeed" : 360,
             "energyCost" : 350
         }
@@ -29,7 +29,7 @@
             "health" : 50.0,
             "damage" : 15.0,
             "attackSpeed" : 0.4,
-            "attackRange" : 12.0,
+            "towerRange" : 12.0,
             "rotationSpeed" : 720,
             "energyCost" : 200
         }
@@ -51,7 +51,7 @@
             "health" : 50.0,
             "damage" : 1,
             "attackSpeed" : 4.0,
-            "attackRange" : 0.4,
+            "towerRange" : 0.4,
             "energyCost" : 200
         }
     },
@@ -62,8 +62,8 @@
         "baseStats" : {
             "health" : 200.0,
             "healing" : 3.0,
-            "healSpeed" : 1.0,
-            "healRange" : 0.5,
+            "supportSpeed" : 1.0,
+            "towerRange" : 3.0,
             "energyCost" : 450
         }
     },
