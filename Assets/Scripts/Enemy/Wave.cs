@@ -40,7 +40,7 @@ public class Wave{
 
     public IEnumerator WaveSpawner()
     {
-        float totalWaveTime = Mathf.Pow(waveRating, 0.5f) + 10; // wave time scales with square root of wave rating
+        float totalWaveTime = 5*Mathf.Pow(waveRating, 0.5f) + 20; // wave time scales with square root of wave rating
         float enemyTimeDelta = totalWaveTime/enemiesToSpawn.Count;
         while(enemiesToSpawn.Count > 1)
         {

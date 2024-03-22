@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 public class Player : MonoBehaviour
 {
-    public int startingEnergy {get; private set;}
+    public int energyPerWave {get; private set;}
     public int energy {get; private set;}
     public int level {get; private set;}
     private TowerBlueprint[] towerBlueprints;
@@ -91,7 +91,7 @@ public class Player : MonoBehaviour
     }
     void WaveCleared()
     {
-        energy = startingEnergy;
+        energy += energyPerWave;
         UpdateEnergyDisplay();
     }
     void StartNewWave()
@@ -99,10 +99,10 @@ public class Player : MonoBehaviour
         level = level+1;
         UpdateLevelDisplay();
     }
-    public void Initialize(int startingEnergy, int level)
+    public void Initialize(int startingEnergy, int energyPerWave, int level)
     {
-        this.startingEnergy = startingEnergy;
         this.energy = startingEnergy;
+        this.energyPerWave = energyPerWave;
         this.level = level;
         this.towerBlueprints[0] = Towers.towerBlueprints["MachineGunTower"];
         this.towerBlueprints[1] = Towers.towerBlueprints["SniperTower"];

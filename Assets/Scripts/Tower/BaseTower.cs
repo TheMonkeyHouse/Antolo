@@ -7,8 +7,8 @@ public class BaseTower : MonoBehaviour, IPointerDownHandler
 {
     public string towerName {get; private set;}
     public string description {get; private set;}
-    [SerializeField] public string towerType {get; private set;}
-    [SerializeField] private SpriteRenderer sr;
+    public string towerType {get; private set;}
+    [SerializeField] public SpriteRenderer sr;
     [SerializeField] private GameObject floatingTextPrefab;
     [SerializeField] private HealthBar healthBar;
     public float maxHP {get; private set;}
@@ -48,16 +48,20 @@ public class BaseTower : MonoBehaviour, IPointerDownHandler
         {
             return;
         }
-        GameObject floatingText = Instantiate(floatingTextPrefab, this.gameObject.transform);
-        floatingText.GetComponent<FloatingText>().Initialize(0.5f, healAmount.ToString(), Color.green);
+        CreateFloatingText(0.5f, healAmount.ToString(), Color.red);
         this.health = newHealth;
         this.healthBar.UpdateCurrentHealth(health);
     }
 
+    public void CreateFloatingText(float lifetime, string text, Color color)
+    {
+        GameObject floatingText = Instantiate(floatingTextPrefab, this.gameObject.transform);
+        floatingText.GetComponent<FloatingText>().Initialize(lifetime, text, color);
+    }
+
     public void HealFull()
     {
-        this.health = this.maxHP;
-        this.healthBar.UpdateCurrentHealth(health);
+        Heal(this.maxHP - this.health);
     }
 
     public void OnPointerDown(PointerEventData eventData)

@@ -597,7 +597,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1316400431844651365}
-  - component: {fileID: 3666730272444720265}
+  - component: {fileID: 5566194540489097216}
   - component: {fileID: 7473933597050814594}
   - component: {fileID: 6941293197845156052}
   m_Layer: 0
@@ -627,7 +627,7 @@ Transform:
   - {fileID: 158712257945359796}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3666730272444720265
+--- !u!114 &5566194540489097216
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -636,14 +636,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8941858339577856894}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ba236800a8bb5445861c1473afd7981, type: 3}
+  m_Script: {fileID: 11500000, guid: 1570a8091f9b9a943ac3d2fb076d44fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sr: {fileID: 3495960086509326218}
   floatingTextPrefab: {fileID: 3093657639401569194, guid: 7c7781fe4a745b041a91d34dcfe289a2, type: 3}
   healthBar: {fileID: 2818011643600587556}
   towerRange: {fileID: 3584022902245556075}
-  towerSprite: {fileID: 2870322779786641691}
 --- !u!61 &7473933597050814594
 BoxCollider2D:
   m_ObjectHideFlags: 0

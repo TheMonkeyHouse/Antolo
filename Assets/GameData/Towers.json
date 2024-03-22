@@ -31,7 +31,9 @@
             "attackSpeed" : 0.4,
             "towerRange" : 12.0,
             "rotationSpeed" : 720,
-            "energyCost" : 200
+            "energyCost" : 200,
+            "magSize" : 5,
+            "reloadTime" : 2.0
         }
     },
     "BasicWall" : {

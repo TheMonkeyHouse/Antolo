@@ -19,7 +19,7 @@ public class EnergyGenerator : Tower
         }
         if (this.timeSinceLastGeneration >  1f / this.generationSpeed)
         {
-            BattlefieldController.instance.player.RecieveEnergy((int) energyAmount);
+            GenerateEnergy((int) energyAmount);
             this.timeSinceLastGeneration = 0;
         }
     }
@@ -33,6 +33,12 @@ public class EnergyGenerator : Tower
         isGenerating = false;
     }
 
+    private void GenerateEnergy(int energy)
+    {
+        CreateFloatingText(0.5f, energy.ToString(), Color.yellow);
+        BattlefieldController.instance.player.RecieveEnergy(energy);
+    }
+
     private void InitIsGenerating()
     {
         if (BattlefieldController.instance.currentPhase == BattlefieldPhase.WaveSpawningPhase)
@@ -40,6 +46,12 @@ public class EnergyGenerator : Tower
             isGenerating = true;
         }
         isGenerating = false;
+    }
+    public override void Die()
+    {
+        BattlefieldEventManager.instance.StartNewWave -= StartNewWave;
+        BattlefieldEventManager.instance.WaveFinishedSpawning -= WaveFinishedSpawning;
+        base.Die();
     }
     public override void Initialize(TowerBlueprint towerBlueprint, Vector3Int location)
     {

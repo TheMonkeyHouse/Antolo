@@ -68,7 +68,7 @@ public class BattlefieldController : MonoBehaviour
             }
         }
         BattlefieldEventManager.instance.OnSetHomebase(new Vector3Int(width/2, height/2, 0));
-        player.Initialize(1000, 0);
+        player.Initialize(1000, 300, 0);
         currentWave = 0;
         currentPhase = BattlefieldPhase.BuildPhase;
         DrawGrid();
