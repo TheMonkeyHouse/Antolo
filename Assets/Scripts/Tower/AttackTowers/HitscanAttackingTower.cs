@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HitscanAttackingTower : AttackingTower 
+public class HitscanAttackingTower : AttackingTower
 {
     public float rotationSpeed {get; private set;}
     

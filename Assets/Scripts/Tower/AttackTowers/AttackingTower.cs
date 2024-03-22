@@ -39,9 +39,14 @@ public abstract class AttackingTower : Tower
             {
                 continue;
             }
-            target.GetComponent<Enemy>().TakeDamage(this.damage);
-            this.timeSinceLastAttack = 0;
+            Attack(target);
         }
+    }
+
+    public virtual void Attack(GameObject target)
+    {
+        target.GetComponent<Enemy>().TakeDamage(this.damage);
+        this.timeSinceLastAttack = 0;
     }
     
     public abstract List<GameObject> GetTargets();
