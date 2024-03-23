@@ -43,6 +43,8 @@ public class ReloadingHitscanAttackingTower : HitscanAttackingTower
     {
         isReloading = false;
         currentShotsLeft = magSize;
+        remainingReloadTime = 0;
+        reloaderDisplay.fillAmount = Mathf.InverseLerp(0, reloadTime, remainingReloadTime);
     }
 
     public override void Attack(GameObject target)

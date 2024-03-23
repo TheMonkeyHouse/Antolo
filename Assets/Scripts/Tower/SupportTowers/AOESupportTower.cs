@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public abstract class AOESupportTower : Tower {
     private float timeSinceLastSupport;
@@ -34,6 +35,19 @@ public abstract class AOESupportTower : Tower {
     }
 
     public abstract void Support(GameObject target);
+
+    public override void Select()
+    {
+        base.Select();
+        towerRange.SetVisualizerActive();
+    }
+
+    public override void Deselect()
+    {
+        base.Deselect();
+        towerRange.SetVisualizerDeactive();
+    }
+
     public override void Initialize(TowerBlueprint towerBlueprint, Vector3Int location)
     {
         base.Initialize(towerBlueprint, location);

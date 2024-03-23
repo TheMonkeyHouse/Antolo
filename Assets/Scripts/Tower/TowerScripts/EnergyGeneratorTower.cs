@@ -23,6 +23,12 @@ public class EnergyGeneratorTower : Tower
             this.timeSinceLastGeneration = 0;
         }
     }
+    public override void Die()
+    {
+        BattlefieldEventManager.instance.StartNewWave -= StartNewWave;
+        BattlefieldEventManager.instance.WaveFinishedSpawning -= WaveFinishedSpawning;
+        base.Die();
+    }
     private void StartNewWave()
     {
         isGenerating = true;
@@ -44,14 +50,9 @@ public class EnergyGeneratorTower : Tower
         if (BattlefieldController.instance.currentPhase == BattlefieldPhase.WaveSpawningPhase)
         {
             isGenerating = true;
+            return;
         }
         isGenerating = false;
-    }
-    public override void Die()
-    {
-        BattlefieldEventManager.instance.StartNewWave -= StartNewWave;
-        BattlefieldEventManager.instance.WaveFinishedSpawning -= WaveFinishedSpawning;
-        base.Die();
     }
     public override void Initialize(TowerBlueprint towerBlueprint, Vector3Int location)
     {

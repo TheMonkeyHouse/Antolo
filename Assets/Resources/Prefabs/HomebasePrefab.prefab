@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1068993622230458463}
   - component: {fileID: 1184564497685083485}
   m_Layer: 0
-  m_Name: Canvas
+  m_Name: HealthbarRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -525,7 +525,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sr: {fileID: 4938708913981148893}
   floatingTextPrefab: {fileID: 3093657639401569194, guid: 7c7781fe4a745b041a91d34dcfe289a2, type: 3}
-  healthBar: {fileID: 7202058859534827020}
+  healthbar: {fileID: 0}
+  healthbarRenderer: {fileID: 0}
 --- !u!61 &7528623868969390023
 BoxCollider2D:
   m_ObjectHideFlags: 0

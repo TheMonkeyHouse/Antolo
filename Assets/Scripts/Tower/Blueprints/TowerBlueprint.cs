@@ -8,6 +8,7 @@ public class TowerBlueprint
     public string towerName;
     public string description;
     public string towerType;
+    public int towerTier;
     public Dictionary<string, float> baseStats;
 
     public bool isPlaceable(Vector3Int pos)
@@ -17,11 +18,11 @@ public class TowerBlueprint
         {
             return false;
         }
-        if (BattlefieldController.instance.state[pos.x,pos.y].type == CellType.Tower)
+        if (BattlefieldController.instance.towerState[pos.x,pos.y])
         {
             return false;
         }
-        if (BattlefieldController.instance.state[pos.x,pos.y].type == CellType.Wall && towerType == "Wall")
+        if (BattlefieldController.instance.wallState[pos.x,pos.y] && towerType == "Wall")
         {
             return false;
         }

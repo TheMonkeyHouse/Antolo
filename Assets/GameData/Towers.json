@@ -4,6 +4,7 @@
         "towerName" : "Homebase",
         "description" : "protect at all costs",
         "towerType" : "Homebase",
+        "towerTier" : 1,
         "baseStats" : {
             "health" : 200,
             "energyCost" : 0
@@ -14,6 +15,7 @@
         "towerName" : "Machine Gun Tower",
         "description" : "Medium range, low damage, high fire rate tower",
         "towerType" : "HitscanAttackingTower",
+        "towerTier" : 1,
         "baseStats" : {
             "health" : 100.0,
             "damage" : 4.0,
@@ -28,11 +30,12 @@
         "towerName" : "Sniper Tower",
         "description" : "High range, high damage, low fire rate tower",
         "towerType" : "ReloadingHitscanAttackingTower",
+        "towerTier" : 1,
         "baseStats" : {
             "health" : 50.0,
             "damage" : 15.0,
             "attackSpeed" : 0.4,
-            "towerRange" : 12.0,
+            "towerRange" : 7.5,
             "rotationSpeed" : 720,
             "energyCost" : 200,
             "magSize" : 5,
@@ -44,6 +47,7 @@
         "towerName" : "Basic Wall",
         "description" : "Tanks enemy attacks. Can place towers on top to give extra range",
         "towerType" : "Wall",
+        "towerTier" : 1,
         "baseStats" : {
             "health" : 250,
             "energyCost" : 150
@@ -54,6 +58,7 @@
         "towerName" : "Spike Trap",
         "description" : "Untargettable by meelee enemies. Does damage to enemies that walk on top.",
         "towerType" : "AOEAttackingTower",
+        "towerTier" : 1,
         "baseStats" : {
             "health" : 50.0,
             "damage" : 1,
@@ -67,6 +72,7 @@
         "towerName" : "Healing Tower",
         "description" : "Slowly heals all towers in range",
         "towerType" : "Support",
+        "towerTier" : 1,
         "baseStats" : {
             "health" : 200.0,
             "healing" : 3.0,
@@ -80,11 +86,29 @@
         "towerName" : "Energy Generator",
         "description" : "Generates 50 energy every 5 seconds during the wave",
         "towerType" : "EnergyGenerating",
+        "towerTier" : 1,
         "baseStats" : {
             "health" : 150.0,
             "energyCost" : 250,
             "energyAmount" : 50,
             "generationSpeed" : 0.2
+        }
+    },
+    "EnhancedSniperTower" : {
+        "towerID" : "EnhancedSniperTower",
+        "towerName" : "Enhanced Sniper Tower",
+        "description" : "Higher damage sniper tower",
+        "towerType" : "ReloadingHitscanAttackingTower",
+        "towerTier" : 2,
+        "baseStats" : {
+            "health" : 75.0,
+            "damage" : 35.0,
+            "attackSpeed" : 0.3,
+            "towerRange" : 12.0,
+            "rotationSpeed" : 360,
+            "energyCost" : 300,
+            "magSize" : 5,
+            "reloadTime" : 2.0
         }
     }
 }

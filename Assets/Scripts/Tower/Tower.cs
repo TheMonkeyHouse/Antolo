@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Tower : BaseTower
 {
+    private bool isOnWall;
     public override void Die()
     {
         BattlefieldEventManager.instance.WallDestroyed -= WallDestroyed;
         BattlefieldEventManager.instance.OnTowerDestroyed(this.gameObject);
-        Destroy(this.gameObject);
+        base.Die();
     }
 
     private void WallDestroyed(GameObject wall)
@@ -23,6 +24,15 @@ public class Tower : BaseTower
     public override void Initialize(TowerBlueprint towerBlueprint, Vector3Int location)
     {
         base.Initialize(towerBlueprint, location);
+        isOnWall = false;
+        if (BattlefieldController.instance.wallState[location.x, location.y])
+        {
+            isOnWall = true;
+        }
+        if (isOnWall)
+        {
+            SetHealthBarActive(false);
+        }
         BattlefieldEventManager.instance.WallDestroyed += WallDestroyed;
     }
     

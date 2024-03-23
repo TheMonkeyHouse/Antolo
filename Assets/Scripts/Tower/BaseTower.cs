@@ -10,7 +10,8 @@ public class BaseTower : MonoBehaviour, IPointerDownHandler
     public string towerType {get; private set;}
     [SerializeField] public SpriteRenderer sr;
     [SerializeField] private GameObject floatingTextPrefab;
-    [SerializeField] private HealthBar healthBar;
+    [SerializeField] private HealthBar healthbar;
+    [SerializeField] private GameObject healthbarRenderer;
     public float maxHP {get; private set;}
     public float health {get; private set;}
     public Vector3Int location  {get; private set;}
@@ -26,7 +27,7 @@ public class BaseTower : MonoBehaviour, IPointerDownHandler
             Die();
             return;
         }
-        this.healthBar.UpdateCurrentHealth(health);
+        this.healthbar.UpdateCurrentHealth(health);
     }
 
     private IEnumerator DamageAnimator()
@@ -38,6 +39,9 @@ public class BaseTower : MonoBehaviour, IPointerDownHandler
 
     public virtual void Die()
     {
+        BattlefieldEventManager.instance.WaveCleared -= HealFull;
+        BattlefieldEventManager.instance.Deselect -= OnDeselected;
+        Destroy(this.gameObject);
     }
 
     public void Heal(float heal)
@@ -50,7 +54,7 @@ public class BaseTower : MonoBehaviour, IPointerDownHandler
         }
         CreateFloatingText(0.5f, healAmount.ToString(), Color.green);
         this.health = newHealth;
-        this.healthBar.UpdateCurrentHealth(health);
+        this.healthbar.UpdateCurrentHealth(health);
     }
 
     public void CreateFloatingText(float lifetime, string text, Color color)
@@ -64,19 +68,38 @@ public class BaseTower : MonoBehaviour, IPointerDownHandler
         Heal(this.maxHP - this.health);
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    public void SetHealthBarActive(bool b)
     {
-        Debug.Log("Clicked: " + towerName);
-        if (BattlefieldController.instance.player.deleteTowerSelected)
+        healthbarRenderer.SetActive(b);
+    }
+    public virtual void OnPointerDown(PointerEventData eventData)
+    {
+        if (GridController.instance.deleteTowerSelected)
         {
             Die();
             return;
         }
+        Select();
+    }
+
+    public void OnDeselected()
+    {
+        Deselect();
+    }
+
+    public virtual void Select()
+    {
+        Debug.Log("Selected: " + towerName);
+    }
+
+    public virtual void Deselect()
+    {
     }
 
     public virtual void Initialize(TowerBlueprint towerBlueprint, Vector3Int location)
     {
         BattlefieldEventManager.instance.WaveCleared += HealFull;
+        BattlefieldEventManager.instance.Deselect += OnDeselected;
         this.towerName = towerBlueprint.towerName;
         this.description = towerBlueprint.description;
         this.towerType = towerBlueprint.towerType;
@@ -84,14 +107,15 @@ public class BaseTower : MonoBehaviour, IPointerDownHandler
         this.maxHP = health;
         this.location = location;
         sr = GetComponentInChildren<SpriteRenderer>();
-        healthBar = GetComponentInChildren<HealthBar>();
+        healthbar = GetComponentInChildren<HealthBar>();
+        healthbarRenderer = transform.Find("HealthbarRenderer").gameObject;
         floatingTextPrefab = Resources.Load<GameObject>("Prefabs/FloatingText");
         Sprite sprite = Towers.towerSprites[towerBlueprint.towerID];
         if (!(sprite == null))
         {
             sr.sprite = Towers.towerSprites[towerBlueprint.towerID];
         } 
-        healthBar.InitHealthBar(this.health);
+        healthbar.InitHealthBar(this.health);
     }
 
     

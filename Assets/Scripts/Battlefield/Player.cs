@@ -20,39 +20,14 @@ public class Player : MonoBehaviour
     [SerializeField] private TowerSelector supportTower1Button;
     [SerializeField] private TowerSelector supportTower2Button;
 
-    public TowerBlueprint selectedTower {get; private set;}
-    public bool deleteTowerSelected {get; private set;}
-
     void Awake()
     {
         towerBlueprints = new TowerBlueprint[6];
-        BattlefieldEventManager.instance.TowerBlueprintSelected += SelectTower;
-        BattlefieldEventManager.instance.DeleteTowerSelected += DeleteTowerSelected;
-        BattlefieldEventManager.instance.Deselect += Deselect;
         BattlefieldEventManager.instance.TowerPlaced += TowerPlaced;
         BattlefieldEventManager.instance.WallPlaced += WallPlaced;
         BattlefieldEventManager.instance.StartNewWave += StartNewWave;
         BattlefieldEventManager.instance.WaveCleared += WaveCleared;
-        selectedTower = null;
-        deleteTowerSelected = false;
     }
-
-    void SelectTower(TowerBlueprint towerBlueprint)
-    {
-        selectedTower = towerBlueprint;
-    }
-
-    void DeleteTowerSelected()
-    {
-        deleteTowerSelected = true;
-    }
-
-    void Deselect()
-    {
-        selectedTower = null;
-        deleteTowerSelected = false;
-    }
-
     public void RecieveEnergy(int extraEnergy)
     {
         this.energy += extraEnergy;

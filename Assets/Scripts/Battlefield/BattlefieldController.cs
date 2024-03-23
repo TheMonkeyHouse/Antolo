@@ -21,6 +21,8 @@ public class BattlefieldController : MonoBehaviour
     public int height = 5;
     public Player player {get; private set;}
     public Cell[,] state {get; private set;}
+    public bool[,] wallState {get; private set;}
+    public bool[,] towerState {get; private set;}
     private int currentWave;
     public BattlefieldPhase currentPhase {get; private set;}
     private void Awake()
@@ -37,6 +39,7 @@ public class BattlefieldController : MonoBehaviour
         BattlefieldEventManager.instance.WallPlaced += PlaceWall;
         BattlefieldEventManager.instance.TowerPlaced += PlaceTower;
         BattlefieldEventManager.instance.TowerDestroyed += TowerDestroyed;
+        BattlefieldEventManager.instance.WallDestroyed += WallDestroyed;
         BattlefieldEventManager.instance.StartNewWave += StartNewWave;
         //load towers
         Towers.LoadTowers();
@@ -54,6 +57,8 @@ public class BattlefieldController : MonoBehaviour
         Camera.main.transform.position = new Vector3(width / 2f, height/ 2f, -10.0f);
         Camera.main.orthographicSize = width*0.6f;
         state = new Cell[width,height];
+        wallState = new bool[width,height];
+        towerState = new bool[width,height];
         for (int x=0; x< width; x++)
         {
             for (int y=0; y<height; y++)
@@ -64,6 +69,7 @@ public class BattlefieldController : MonoBehaviour
                 if (x==width/2 && y==width/2)
                 {
                     cell.type = CellType.Tower;
+                    this.towerState[x,y] = true;
                 }
                 this.state[x,y] = cell;
             }
@@ -82,7 +88,7 @@ public class BattlefieldController : MonoBehaviour
 
     public void PlaceWall(TowerBlueprint towerBlueprint, Vector3Int position)
     {
-        this.state[position.x, position.y].type = CellType.Wall;
+        this.wallState[position.x, position.y] = true;
         DrawGrid();
     }
 
@@ -92,14 +98,20 @@ public class BattlefieldController : MonoBehaviour
         {
             return;
         }
-        this.state[position.x, position.y].type = CellType.Tower;
+        this.towerState[position.x, position.y] = true;
         DrawGrid();
     }
 
     private void TowerDestroyed(GameObject tower)
     {
         Vector3Int location = tower.GetComponent<Tower>().location;
-        this.state[location.x, location.y].type = CellType.Ground;
+        this.towerState[location.x, location.y] = false;
+        DrawGrid();
+    }
+    private void WallDestroyed(GameObject wall)
+    {
+        Vector3Int location = wall.GetComponent<Wall>().location;
+        this.wallState[location.x, location.y] = false;
         DrawGrid();
     }
 

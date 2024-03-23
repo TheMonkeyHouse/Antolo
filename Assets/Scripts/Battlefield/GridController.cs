@@ -6,39 +6,60 @@ using UnityEngine.UIElements;
 
 public class GridController : MonoBehaviour
 {
+    public static GridController instance {get; private set;}
+    
     private Grid grid;
-    [SerializeField] private Tilemap interactiveMap = null;
-    [SerializeField] private Tile hoverTile = null;
-    [SerializeField] private Tile hoverTileGood = null;
-    [SerializeField] private Tile hoverTileBad = null;
+    [SerializeField] private Tilemap interactiveMap;
+    [SerializeField] private Tile hoverTile;
+    [SerializeField] private Tile hoverTileGood;
+    [SerializeField] private Tile hoverTileBad;
+    [SerializeField] private GameObject ghostTower;
 
-
-
+    private TowerBlueprint selectedTower;
+    public bool deleteTowerSelected {get; private set;}
     private Vector3Int previousMousePos = new Vector3Int();
 
-    // Start is called before the first frame update
-    void Start(){
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+        {
+            Destroy(this);
+        }
+        BattlefieldEventManager.instance.TowerBlueprintSelected += SelectTower;
+        BattlefieldEventManager.instance.DeleteTowerSelected += DeleteTowerSelected;
+        BattlefieldEventManager.instance.Deselect += Deselect;
+    }
+    private void Start(){
         grid = gameObject.GetComponent<Grid>();
     }
-
-    // Update is called once per frame
     void Update(){
-        // Mouse over -> highlight tile
+        
         Vector3Int mousePos = GetMousePosition();
+        ghostTower.transform.position = mousePos;
+
+        SetGhostTowerActivity(mousePos);
+        
+        // Mouse over -> highlight tile
         if (!mousePos.Equals(previousMousePos)) {
+            
             interactiveMap.SetTile(previousMousePos, null); // Remove old hoverTile
+            
             // update if on map
             if (BattlefieldController.instance.IsInGrid(mousePos))
             {
                 interactiveMap.SetTile(mousePos, GetTile(mousePos));
                 previousMousePos = mousePos;
+                if (!(selectedTower == null))
+                {
+                    ghostTower.GetComponent<GhostTower>().SetColor(GetGhostTowerColor(mousePos));
+                }
             }
         }
 
         // left mouse click -> get tile info / place tower
         if (Input.GetMouseButton(0)) {
-            
-            TowerBlueprint selectedTower = BattlefieldController.instance.player.selectedTower;
             
             if (!(selectedTower == null))
             {
@@ -68,6 +89,35 @@ public class GridController : MonoBehaviour
             // display info about tile
         }
     }
+    private void SelectTower(TowerBlueprint towerBlueprint)
+    {
+        ghostTower.GetComponent<GhostTower>().SetBlueprint(towerBlueprint);
+        selectedTower = towerBlueprint;
+    }
+    private void DeleteTowerSelected()
+    {
+        deleteTowerSelected = true;
+    }
+    private void Deselect()
+    {
+        selectedTower = null;
+        deleteTowerSelected = false;
+    }
+
+    private void SetGhostTowerActivity(Vector3Int mousePos)
+    {
+        if (selectedTower == null)
+        {
+            ghostTower.SetActive(false);
+            return;
+        }
+        if (!BattlefieldController.instance.IsInGrid(mousePos))
+        {
+            ghostTower.SetActive(false);
+            return;
+        }
+        ghostTower.SetActive(true);
+    }
 
     Vector3Int GetMousePosition(){
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -76,15 +126,24 @@ public class GridController : MonoBehaviour
 
     Tile GetTile(Vector3Int mousePos)
     {
-        if (!(BattlefieldController.instance.player.selectedTower == null))
+        if (!(selectedTower == null))
         {
-            if (isPlaceable(BattlefieldController.instance.player.selectedTower, mousePos))
+            if (isPlaceable(selectedTower, mousePos))
             {
                 return hoverTileGood;
             }
             return hoverTileBad;
         }
         return hoverTile;
+    }
+
+    Color GetGhostTowerColor(Vector3Int mousePos)
+    {
+        if (!isPlaceable(selectedTower, mousePos))
+        {
+            return Color.red;
+        }
+        return Color.green;
     }
 
     bool isPlaceable(TowerBlueprint towerBlueprint, Vector3Int pos)
