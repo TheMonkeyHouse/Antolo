@@ -48,7 +48,7 @@ public class BaseTower : MonoBehaviour, IPointerDownHandler
         {
             return;
         }
-        CreateFloatingText(0.5f, healAmount.ToString(), Color.red);
+        CreateFloatingText(0.5f, healAmount.ToString(), Color.green);
         this.health = newHealth;
         this.healthBar.UpdateCurrentHealth(health);
     }
@@ -81,8 +81,16 @@ public class BaseTower : MonoBehaviour, IPointerDownHandler
         this.description = towerBlueprint.description;
         this.towerType = towerBlueprint.towerType;
         this.health = towerBlueprint.baseStats["health"];
-        this.maxHP = towerBlueprint.baseStats["health"];
+        this.maxHP = health;
         this.location = location;
+        sr = GetComponentInChildren<SpriteRenderer>();
+        healthBar = GetComponentInChildren<HealthBar>();
+        floatingTextPrefab = Resources.Load<GameObject>("Prefabs/FloatingText");
+        Sprite sprite = Towers.towerSprites[towerBlueprint.towerID];
+        if (!(sprite == null))
+        {
+            sr.sprite = Towers.towerSprites[towerBlueprint.towerID];
+        } 
         healthBar.InitHealthBar(this.health);
     }
 

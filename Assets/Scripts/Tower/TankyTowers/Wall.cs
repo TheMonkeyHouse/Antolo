@@ -9,4 +9,10 @@ public class Wall : BaseTower
         BattlefieldEventManager.instance.OnWallDestroyed(this.gameObject);
         Destroy(this.gameObject);
     }
+
+    public override void Initialize(TowerBlueprint towerBlueprint, Vector3Int location)
+    {
+        base.Initialize(towerBlueprint, location);
+        sr.sortingOrder = 1;
+    }
 }

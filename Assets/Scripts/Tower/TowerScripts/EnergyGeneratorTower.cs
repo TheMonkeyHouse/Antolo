@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnergyGenerator : Tower
+public class EnergyGeneratorTower : Tower
 {
     public float energyAmount {get; private set;}
     public float generationSpeed {get; private set;}

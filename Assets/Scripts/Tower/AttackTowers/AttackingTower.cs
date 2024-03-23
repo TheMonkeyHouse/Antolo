@@ -7,13 +7,8 @@ public abstract class AttackingTower : Tower
     public float damage {get; private set;}
     public float attackSpeed {get; private set;}
     public float attackRange {get; private set;}
-    [SerializeField] public TowerRange towerRange;
+    public TowerRange towerRange {get; private set;}
     private float timeSinceLastAttack;
-
-    void Awake()
-    {
-        this.towerRange = GetComponentInChildren<TowerRange>();
-    }
 
     void Update()
     {
@@ -58,6 +53,8 @@ public abstract class AttackingTower : Tower
     public override void Initialize(TowerBlueprint towerBlueprint, Vector3Int location)
     {
         base.Initialize(towerBlueprint, location);
+        GameObject towerRangeGO = Instantiate(Resources.Load<GameObject>("Prefabs/AttackTowerRange"), this.gameObject.transform);
+        this.towerRange = towerRangeGO.GetComponent<TowerRange>();
         this.damage = towerBlueprint.baseStats["damage"];
         this.attackSpeed = towerBlueprint.baseStats["attackSpeed"];
         this.attackRange = towerBlueprint.baseStats["towerRange"];

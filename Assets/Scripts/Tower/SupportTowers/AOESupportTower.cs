@@ -37,9 +37,11 @@ public abstract class AOESupportTower : Tower {
     public override void Initialize(TowerBlueprint towerBlueprint, Vector3Int location)
     {
         base.Initialize(towerBlueprint, location);
+        GameObject towerRangeGO = Instantiate(Resources.Load<GameObject>("Prefabs/SupportTowerRange"), this.gameObject.transform);
+        this.towerRange = towerRangeGO.GetComponent<TowerRange>();
         this.supportSpeed = towerBlueprint.baseStats["supportSpeed"];
         this.towerRangeRadius = towerBlueprint.baseStats["towerRange"];
         this.timeSinceLastSupport = 0;
-        towerRange.SetRadius(towerBlueprint.baseStats["towerRange"]);
+        towerRange.SetRadius(towerRangeRadius);
     }
 }

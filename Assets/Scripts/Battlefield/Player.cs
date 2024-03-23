@@ -109,7 +109,7 @@ public class Player : MonoBehaviour
         this.towerBlueprints[2] = Towers.towerBlueprints["BasicWall"];
         this.towerBlueprints[3] = Towers.towerBlueprints["SpikeTrap"];
         this.towerBlueprints[4] = Towers.towerBlueprints["HealingTower"];
-        this.towerBlueprints[5] = Towers.towerBlueprints["RoundIncomeTower"];
+        this.towerBlueprints[5] = Towers.towerBlueprints["EnergyGeneratorTower"];
         UpdateButtons();
         UpdateEnergyDisplay();
         UpdateLevelDisplay();

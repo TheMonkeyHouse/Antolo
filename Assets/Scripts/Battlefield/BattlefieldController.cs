@@ -34,6 +34,7 @@ public class BattlefieldController : MonoBehaviour
         battlefieldGrid = GetComponentInChildren<BattlefieldGrid>();
         player = GetComponentInChildren<Player>();
         // init events
+        BattlefieldEventManager.instance.WallPlaced += PlaceWall;
         BattlefieldEventManager.instance.TowerPlaced += PlaceTower;
         BattlefieldEventManager.instance.TowerDestroyed += TowerDestroyed;
         BattlefieldEventManager.instance.StartNewWave += StartNewWave;

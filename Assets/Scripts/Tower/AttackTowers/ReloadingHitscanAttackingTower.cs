@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ReloadingHitscanAttackingTower : HitscanAttackingTower
 {
-    [SerializeField] private Image reloaderDisplay;
+    private Image reloaderDisplay;
     private int magSize;
     private float reloadTime;
     private float remainingReloadTime;
@@ -25,6 +25,12 @@ public class ReloadingHitscanAttackingTower : HitscanAttackingTower
             return;
         }
         base.TryAttack(targets);
+    }
+
+    public override void Die()
+    {
+        BattlefieldEventManager.instance.WaveCleared -= EndReload;
+        base.Die();
     }
 
     private void StartReload()
@@ -51,6 +57,9 @@ public class ReloadingHitscanAttackingTower : HitscanAttackingTower
 
     public override void Initialize(TowerBlueprint towerBlueprint, Vector3Int location)
     {
+        GameObject reloadIndicatorGO = Instantiate(Resources.Load<GameObject>("Prefabs/ReloadIndicator"), this.gameObject.transform);
+        reloaderDisplay = reloadIndicatorGO.GetComponentInChildren<Image>();
+        BattlefieldEventManager.instance.WaveCleared += EndReload;
         this.magSize = (int) towerBlueprint.baseStats["magSize"];
         this.reloadTime = towerBlueprint.baseStats["reloadTime"];
         this.currentShotsLeft = magSize;

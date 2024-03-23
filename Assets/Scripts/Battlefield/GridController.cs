@@ -89,22 +89,6 @@ public class GridController : MonoBehaviour
 
     bool isPlaceable(TowerBlueprint towerBlueprint, Vector3Int pos)
     {
-        if (!BattlefieldController.instance.IsInGrid(pos))
-        {
-            return false;
-        }
-        if (BattlefieldController.instance.state[pos.x,pos.y].type == CellType.Tower)
-        {
-            return false;
-        }
-        if (BattlefieldController.instance.state[pos.x,pos.y].type == CellType.Wall && towerBlueprint.towerType == "Wall")
-        {
-            return false;
-        }
-        if (BattlefieldController.instance.player.energy < towerBlueprint.baseStats["energyCost"])
-        {
-            return false;
-        }
-        return true;
+        return towerBlueprint.isPlaceable(pos);
     }
 }

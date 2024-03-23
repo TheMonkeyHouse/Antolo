@@ -43,6 +43,7 @@ public class HitscanAttackingTower : AttackingTower
     public override void Initialize(TowerBlueprint towerBlueprint, Vector3Int location)
     {
         base.Initialize(towerBlueprint, location);
+        Instantiate(Resources.Load<GameObject>("Prefabs/TowerBase"), this.gameObject.transform);
         this.rotationSpeed = towerBlueprint.baseStats["rotationSpeed"];
     }
 
