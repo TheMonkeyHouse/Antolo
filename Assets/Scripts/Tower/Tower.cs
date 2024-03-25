@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Tower : BaseTower
 {
-    private bool isOnWall;
+    public bool isOnWall {get; private set;}
     public override void Die()
     {
         BattlefieldEventManager.instance.WallDestroyed -= WallDestroyed;

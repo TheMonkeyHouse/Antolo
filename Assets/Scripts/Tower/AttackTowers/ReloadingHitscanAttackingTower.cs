@@ -12,7 +12,7 @@ public class ReloadingHitscanAttackingTower : HitscanAttackingTower
     private int currentShotsLeft;
     private bool isReloading;
 
-    public override void TryAttack(List<GameObject> targets)
+    protected override void Update()
     {
         if (isReloading)
         {
@@ -22,11 +22,10 @@ public class ReloadingHitscanAttackingTower : HitscanAttackingTower
             {
                 EndReload();
             }
-            return;
         }
-        base.TryAttack(targets);
+        base.Update();
     }
-
+        
     public override void Die()
     {
         BattlefieldEventManager.instance.WaveCleared -= EndReload;
@@ -47,14 +46,23 @@ public class ReloadingHitscanAttackingTower : HitscanAttackingTower
         reloaderDisplay.fillAmount = Mathf.InverseLerp(0, reloadTime, remainingReloadTime);
     }
 
-    public override void Attack(GameObject target)
+    public override bool Attack(GameObject target)
     {
+        if (isReloading)
+        {
+            return false;
+        }
+        if(!base.Attack(target))
+        {
+            return false;
+        }
         this.currentShotsLeft--;
         if (currentShotsLeft <= 0)
         {
             StartReload();
         }
-        base.Attack(target);
+        return true;
+
     }
 
     public override void Initialize(TowerBlueprint towerBlueprint, Vector3Int location)

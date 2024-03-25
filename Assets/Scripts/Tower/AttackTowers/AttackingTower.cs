@@ -9,9 +9,9 @@ public abstract class AttackingTower : Tower
     public float attackSpeed {get; private set;}
     public float attackRange {get; private set;}
     public TowerRange towerRange {get; private set;}
-    private float timeSinceLastAttack;
+    public float timeSinceLastAttack {get; private set;}
 
-    void Update()
+    protected virtual void Update()
     {
         this.timeSinceLastAttack += Time.deltaTime;
         TryAttack(GetTargets());
@@ -19,12 +19,6 @@ public abstract class AttackingTower : Tower
 
     public virtual void TryAttack(List<GameObject> targets)
     {
-        // if within attack speed, skip
-        if (this.timeSinceLastAttack <  1f / this.attackSpeed)
-        {
-            return;
-        }
-        
         foreach(GameObject target in targets)
         {
             if (target == null)
@@ -39,10 +33,16 @@ public abstract class AttackingTower : Tower
         }
     }
 
-    public virtual void Attack(GameObject target)
+    public virtual bool Attack(GameObject target)
     {
+        // if within attack speed, skip
+        if (this.timeSinceLastAttack <  1f / this.attackSpeed)
+        {
+            return false;
+        }
         target.GetComponent<Enemy>().TakeDamage(this.damage);
         this.timeSinceLastAttack = 0;
+        return true;
     }
     
     public abstract List<GameObject> GetTargets();

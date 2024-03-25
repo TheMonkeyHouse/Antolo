@@ -6,11 +6,13 @@ using UnityEngine.EventSystems;
 public class Enemy : MonoBehaviour, IPointerDownHandler
 {
     public string enemyName {get; private set;}
+    [SerializeField] private GameObject healthbarRenderer;
     private HealthBar healthBar;
     [SerializeField] private GameObject floatingTextPrefab;
     private SpriteRenderer sr;
     private List<GameObject> currentTargets;
     private float timeSinceLastAttack;
+    public bool isAlive {get; private set;}
 
     // stats
     public float health {get; private set;}
@@ -39,6 +41,10 @@ public class Enemy : MonoBehaviour, IPointerDownHandler
 
     private void Update()
     {
+        if (!isAlive)
+        {
+            return;
+        }
         GameObject target = GetTarget();
         // if not attacking, move towards center
         if (target == null)
@@ -114,29 +120,41 @@ public class Enemy : MonoBehaviour, IPointerDownHandler
 
     public void TakeDamage(float dmg)
     {
-        StartCoroutine(DamageAnimator());
+        
         health = health - dmg;
         GameObject floatingText = Instantiate(floatingTextPrefab, this.gameObject.transform);
         floatingText.GetComponent<FloatingText>().Initialize(0.5f, dmg.ToString(), Color.red);
+        this.healthBar.UpdateCurrentHealth(health);
         if (health <= 0)
         {
             Die();
             return;
         }
-        this.healthBar.UpdateCurrentHealth(health);
+        StartCoroutine(DamageAnimator(0.1f));
     }
 
-    private IEnumerator DamageAnimator()
+    private IEnumerator DamageAnimator(float time)
     {
-        sr.color = new Color(1, 0, 0 ,0.5f);
-        yield return new WaitForSecondsRealtime(0.1f);
-        sr.color = new Color(1, 1, 1 ,1);
+        if (isAlive)
+        {
+            sr.color = new Color(1, 0, 0 ,0.5f);
+            yield return new WaitForSecondsRealtime(time);
+            sr.color = new Color(1, 1, 1 ,1);
+        }
+    }
+
+    public void SetHealthBarActive(bool b)
+    {
+        healthbarRenderer.SetActive(b);
     }
 
     private void Die()
     {
         BattlefieldEventManager.instance.OnEnemyDestroyed(this.gameObject);
-        Destroy(this.gameObject);
+        isAlive = false;
+        sr.enabled = false;
+        SetHealthBarActive(false);
+        Destroy(this.gameObject, 1f);
     }
 
     private void TowerDestroyed(GameObject tower)
@@ -158,6 +176,7 @@ public class Enemy : MonoBehaviour, IPointerDownHandler
         this.damage = enemyBlueprint.baseStats["damage"];
         this.attackSpeed = enemyBlueprint.baseStats["attackSpeed"];
         healthBar.InitHealthBar(health);
+        isAlive = true;
         GetPath();
     }
 }

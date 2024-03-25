@@ -11,12 +11,21 @@ public class GhostTower : MonoBehaviour
     public void SetBlueprint(TowerBlueprint towerBlueprint)
     {
         towerRangeVisualizer.SetActive(false);
-        sr.sprite = Towers.towerSprites[towerBlueprint.towerID];
+        SetSprite(Towers.towerSprites[towerBlueprint.towerID]);
         if (towerBlueprint.baseStats.ContainsKey("towerRange"))
         {
             towerRangeVisualizer.SetActive(true);
             towerRangeVisualizer.transform.localScale = new Vector3(2*towerBlueprint.baseStats["towerRange"], 2*towerBlueprint.baseStats["towerRange"], 1);
         }   
+    }
+
+    private void SetSprite(Sprite sprite)
+    {
+        if (sprite == null)
+        {
+            sr.sprite = Towers.towerSprites["UnknownTower"];
+        }
+        sr.sprite = sprite;
     }
 
     public void SetColor(Color color)

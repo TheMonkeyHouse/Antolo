@@ -444,6 +444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2ece4006afe720439124deacb85a76d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthbarRenderer: {fileID: 1878448549522565085}
   floatingTextPrefab: {fileID: 3093657639401569194, guid: 89a3c9c6cc620ca4a9505124cf65361f, type: 3}
 --- !u!58 &9178005402343420492
 CircleCollider2D:

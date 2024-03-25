@@ -16,6 +16,10 @@ public class AttackTowerRange : TowerRange
         {
             return;
         }
+        if (!col.gameObject.GetComponent<Enemy>().isAlive)
+        {
+            return;
+        }
         enemiesInRange.Add(col.gameObject);
     }
     private void OnTriggerExit2D(Collider2D col){
@@ -28,6 +32,7 @@ public class AttackTowerRange : TowerRange
 
     public override List<GameObject> GetTargets()
     {
+        // sort list by targeting order
         return new List<GameObject>(enemiesInRange);
     }
 
