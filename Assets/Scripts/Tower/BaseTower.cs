@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class BaseTower : MonoBehaviour, ISelectHandler, IDeselectHandler
+public class BaseTower : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointerDownHandler
 {
     public string towerName {get; private set;}
     public string description {get; private set;}
@@ -71,13 +71,28 @@ public class BaseTower : MonoBehaviour, ISelectHandler, IDeselectHandler
     {
         healthbarRenderer.SetActive(b);
     }
-    public void OnSelect(BaseEventData eventData)
+
+    public void OnPointerDown(PointerEventData eventData)
     {
+        if (eventData.button != PointerEventData.InputButton.Left)
+            return;
+
         if (GridController.instance.deleteTowerSelected)
         {
             Die();
             return;
         }
+
+        if (GridController.instance.selectedTower != null)
+        {
+            return;
+        }
+
+        EventSystem.current.SetSelectedGameObject(gameObject, eventData);
+    }
+
+    public void OnSelect(BaseEventData eventData)
+    {
         Selected();
     }
 
