@@ -13,12 +13,12 @@ public class Player : MonoBehaviour
     [SerializeField] private TMP_Text levelDisplay;
     
     // Associated Buttons
-    [SerializeField] private TowerSelector attackTower1Button;
-    [SerializeField] private TowerSelector attackTower2Button;
-    [SerializeField] private TowerSelector tankyTower1Button;
-    [SerializeField] private TowerSelector tankyTower2Button;
-    [SerializeField] private TowerSelector supportTower1Button;
-    [SerializeField] private TowerSelector supportTower2Button;
+    [SerializeField] private BlueprintSelector attackTower1Button;
+    [SerializeField] private BlueprintSelector attackTower2Button;
+    [SerializeField] private BlueprintSelector tankyTower1Button;
+    [SerializeField] private BlueprintSelector tankyTower2Button;
+    [SerializeField] private BlueprintSelector supportTower1Button;
+    [SerializeField] private BlueprintSelector supportTower2Button;
 
     void Awake()
     {

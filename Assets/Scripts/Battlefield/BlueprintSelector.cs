@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class TowerSelector : MonoBehaviour
+public class BlueprintSelector : MonoBehaviour
 {
     private TowerBlueprint towerBlueprint;
     [SerializeField] private TMP_Text buttonText;

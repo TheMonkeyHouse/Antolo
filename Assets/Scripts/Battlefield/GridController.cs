@@ -15,7 +15,7 @@ public class GridController : MonoBehaviour
     [SerializeField] private Tile hoverTileBad;
     [SerializeField] private GameObject ghostTower;
 
-    private TowerBlueprint selectedTower;
+    public TowerBlueprint selectedTower {get; private set;}
     public bool deleteTowerSelected {get; private set;}
     private Vector3Int previousMousePos = new Vector3Int();
 

@@ -9,10 +9,6 @@ public abstract class AOESupportTower : Tower {
     public float supportSpeed {get; private set;}
     public float towerRangeRadius {get; private set;}
     
-    void Awake()
-    {
-        this.towerRange = GetComponentInChildren<TowerRange>();
-    }
     void Update()
     {
         List<GameObject> targets = towerRange.GetTargets();
@@ -36,16 +32,16 @@ public abstract class AOESupportTower : Tower {
 
     public abstract void Support(GameObject target);
 
-    public override void Select()
+    public override void Selected()
     {
-        base.Select();
-        towerRange.SetVisualizerActive();
+        base.Selected();
+        towerRange.SetVisualizerActive(true);
     }
 
-    public override void Deselect()
+    public override void Deselected()
     {
-        base.Deselect();
-        towerRange.SetVisualizerDeactive();
+        base.Deselected();
+        towerRange.SetVisualizerActive(false);
     }
 
     public override void Initialize(TowerBlueprint towerBlueprint, Vector3Int location)
@@ -57,5 +53,6 @@ public abstract class AOESupportTower : Tower {
         this.towerRangeRadius = towerBlueprint.baseStats["towerRange"];
         this.timeSinceLastSupport = 0;
         towerRange.SetRadius(towerRangeRadius);
+        towerRange.SetVisualizerActive(false);
     }
 }

@@ -51,16 +51,16 @@ public abstract class AttackingTower : Tower
         return true;
     }
 
-    public override void Select()
+    public override void Selected()
     {
-        base.Select();
-        towerRange.SetVisualizerActive();
+        base.Selected();
+        towerRange.SetVisualizerActive(true);
     }
 
-    public override void Deselect()
+    public override void Deselected()
     {
-        base.Deselect();
-        towerRange.SetVisualizerDeactive();
+        base.Deselected();
+        towerRange.SetVisualizerActive(false);
     }
 
     public override void Initialize(TowerBlueprint towerBlueprint, Vector3Int location)
@@ -73,5 +73,6 @@ public abstract class AttackingTower : Tower
         this.attackRange = towerBlueprint.baseStats["towerRange"];
         this.timeSinceLastAttack = 1f / this.attackSpeed;
         towerRange.SetRadius(towerBlueprint.baseStats["towerRange"]);
+        towerRange.SetVisualizerActive(false);
     }
 }
