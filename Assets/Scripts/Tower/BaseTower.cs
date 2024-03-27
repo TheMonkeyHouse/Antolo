@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class BaseTower : MonoBehaviour, IPointerDownHandler
+public class BaseTower : MonoBehaviour, ISelectHandler, IDeselectHandler
 {
     public string towerName {get; private set;}
     public string description {get; private set;}
@@ -40,7 +40,6 @@ public class BaseTower : MonoBehaviour, IPointerDownHandler
     public virtual void Die()
     {
         BattlefieldEventManager.instance.WaveCleared -= HealFull;
-        BattlefieldEventManager.instance.Deselect -= OnDeselected;
         Destroy(this.gameObject);
     }
 
@@ -72,34 +71,36 @@ public class BaseTower : MonoBehaviour, IPointerDownHandler
     {
         healthbarRenderer.SetActive(b);
     }
-    public virtual void OnPointerDown(PointerEventData eventData)
+    public void OnSelect(BaseEventData eventData)
     {
         if (GridController.instance.deleteTowerSelected)
         {
             Die();
             return;
         }
-        Select();
+        Selected();
     }
 
-    public void OnDeselected()
+    public void OnDeselect(BaseEventData eventData)
     {
-        Deselect();
+        Deselected();
     }
 
-    public virtual void Select()
+    public virtual void Selected()
     {
+        sr.color = Color.blue;
         Debug.Log("Selected: " + towerName);
     }
 
-    public virtual void Deselect()
+    public virtual void Deselected()
     {
+        sr.color = Color.white;
+        Debug.Log("Deselected" + towerName);
     }
 
     public virtual void Initialize(TowerBlueprint towerBlueprint, Vector3Int location)
     {
         BattlefieldEventManager.instance.WaveCleared += HealFull;
-        BattlefieldEventManager.instance.Deselect += OnDeselected;
         this.towerName = towerBlueprint.towerName;
         this.description = towerBlueprint.description;
         this.towerType = towerBlueprint.towerType;

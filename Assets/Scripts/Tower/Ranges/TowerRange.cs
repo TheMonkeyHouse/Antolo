@@ -17,12 +17,8 @@ public abstract class TowerRange : MonoBehaviour
         towerRangeVisualizer.transform.localScale = new Vector3(2*radius, 2*radius, 1);
     }
 
-    public void SetVisualizerActive()
+    public void SetVisualizerActive(bool b)
     {
-        towerRangeVisualizer.SetActive(true);
-    }
-    public void SetVisualizerDeactive()
-    {
-        towerRangeVisualizer.SetActive(false);
+        towerRangeVisualizer.SetActive(b);
     }
 }
