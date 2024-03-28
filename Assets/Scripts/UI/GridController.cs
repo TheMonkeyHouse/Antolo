@@ -15,6 +15,7 @@ public class GridController : MonoBehaviour
     [SerializeField] private Tile hoverTileBad;
     [SerializeField] private GameObject ghostTower;
 
+    private bool isActive;
     public TowerBlueprint selectedTower {get; private set;}
     public bool deleteTowerSelected {get; private set;}
     private Vector3Int previousMousePos = new Vector3Int();
@@ -35,8 +36,15 @@ public class GridController : MonoBehaviour
         grid = gameObject.GetComponent<Grid>();
     }
     void Update(){
-        
         Vector3Int mousePos = GetMousePosition();
+        
+        if (!isActive)
+        {
+            SetGhostTowerActivity(mousePos);
+            interactiveMap.SetTile(previousMousePos, null);
+            return;
+        }
+        
         ghostTower.transform.position = mousePos;
 
         SetGhostTowerActivity(mousePos);
@@ -104,8 +112,18 @@ public class GridController : MonoBehaviour
         deleteTowerSelected = false;
     }
 
+    public void SetActive(bool b)
+    {
+        isActive = b;
+    }
+
     private void SetGhostTowerActivity(Vector3Int mousePos)
     {
+        if (!isActive)
+        {
+            ghostTower.SetActive(false);
+            return;
+        }
         if (selectedTower == null)
         {
             ghostTower.SetActive(false);
@@ -126,6 +144,10 @@ public class GridController : MonoBehaviour
 
     Tile GetTile(Vector3Int mousePos)
     {
+        if (!isActive)
+        {
+            return null;
+        }
         if (!(selectedTower == null))
         {
             if (isPlaceable(selectedTower, mousePos))

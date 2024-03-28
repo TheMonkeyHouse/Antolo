@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     public int energyPerWave {get; private set;}
     public int energy {get; private set;}
     public int level {get; private set;}
-    private TowerBlueprint[] towerBlueprints;
+    public TowerBlueprint[] towerBlueprints {get; private set;}
     [SerializeField] private TMP_Text energyDisplay;
     [SerializeField] private TMP_Text levelDisplay;
     
@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
         BattlefieldEventManager.instance.WallPlaced += WallPlaced;
         BattlefieldEventManager.instance.StartNewWave += StartNewWave;
         BattlefieldEventManager.instance.WaveCleared += WaveCleared;
+        BattlefieldEventManager.instance.UpgradeSelected += UpgradeSelected;
     }
     public void RecieveEnergy(int extraEnergy)
     {
@@ -73,6 +74,12 @@ public class Player : MonoBehaviour
     {
         level = level+1;
         UpdateLevelDisplay();
+    }
+
+    private void UpgradeSelected(int from, TowerBlueprint toTowerBlueprint)
+    {
+        towerBlueprints[from] = toTowerBlueprint;
+        UpdateButtons();
     }
     public void Initialize(int startingEnergy, int energyPerWave, int level)
     {
