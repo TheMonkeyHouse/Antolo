@@ -9,22 +9,19 @@ public class ChooseUpgrade : MonoBehaviour
     private int choiceFor;
     private TowerBlueprint towerBlueprint;
     [SerializeField] TMP_Text towerNameText;
-    [SerializeField] LineRenderer lr;
+    [SerializeField] private LineRenderer lr;
 
     private void Awake()
     {
-        lr.startColor = Color.black;
-        lr.endColor = Color.black;
-        lr.startWidth = 0.01f;
-        lr.endWidth = 0.01f;
-        lr.positionCount = 2;
-        lr.SetPosition(1, new Vector3(10,10,0));
+        lr.startWidth = 0.1f;
+        lr.endWidth = 0.1f;
     }
 
     public void UpdateDisplay()
     {
         towerNameText.text = towerBlueprint.towerName;
-        lr.SetPosition(0, new Vector3(-10,-10,0));
+        Vector3 lineTo = BattlefieldController.instance.player.IntToScreenPoint(choiceFor);
+        lr.SetPosition(1, new Vector3(lineTo.x,lineTo.y,1));
     }
     public void SetUpgrade(int choiceFor, TowerBlueprint towerBlueprint)
     {

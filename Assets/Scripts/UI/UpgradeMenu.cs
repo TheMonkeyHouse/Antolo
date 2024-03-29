@@ -85,7 +85,7 @@ public class UpgradeMenu : MonoBehaviour
         {
             int temp = upgradeFrom1;
             upgradeFrom1 = upgradeFrom2;
-            upgradeFrom1 = temp;
+            upgradeFrom2 = temp;
         }
         
         // get choice from choices list

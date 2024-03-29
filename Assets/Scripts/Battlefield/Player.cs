@@ -81,6 +81,24 @@ public class Player : MonoBehaviour
         towerBlueprints[from] = toTowerBlueprint;
         UpdateButtons();
     }
+
+    public Vector3 IntToScreenPoint(int choiceFor)
+    {
+        if (choiceFor == 0) {
+            return attackTower1Button.gameObject.transform.position;
+        } else if (choiceFor == 1) {
+            return attackTower2Button.gameObject.transform.position;
+        } else if (choiceFor == 2) {
+            return tankyTower1Button.gameObject.transform.position;
+        } else if (choiceFor == 3) {
+            return tankyTower2Button.gameObject.transform.position;
+        } else if (choiceFor == 4) {
+            return supportTower1Button.gameObject.transform.position;
+        } else if (choiceFor == 5) {
+            return supportTower2Button.gameObject.transform.position;
+        }
+        return new Vector3(0f,0f,0f);
+    }
     public void Initialize(int startingEnergy, int energyPerWave, int level)
     {
         this.energy = startingEnergy;
