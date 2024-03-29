@@ -16,16 +16,18 @@ public class UpgradeMenu : MonoBehaviour
         towerChoices["Damage"] = new Dictionary<int, List<TowerBlueprint>>();
         towerChoices["Tanky"] = new Dictionary<int, List<TowerBlueprint>>();
         towerChoices["Support"] = new Dictionary<int, List<TowerBlueprint>>();
+        towerChoices["Default"] = new Dictionary<int, List<TowerBlueprint>>();
         
         for (int i = 1; i <= 3; i++)
         {
             towerChoices["Damage"][i] = new List<TowerBlueprint>();
             towerChoices["Tanky"][i] = new List<TowerBlueprint>();
             towerChoices["Support"][i] = new List<TowerBlueprint>();
+            towerChoices["Default"][i] = new List<TowerBlueprint>();
         }
         foreach (TowerBlueprint tower in Towers.towerBlueprints.Values)
         {
-            if (tower.towerClass == "Homebase")
+            if (tower.towerClass == "Default")
             {
                 continue;
             }
@@ -103,7 +105,7 @@ public class UpgradeMenu : MonoBehaviour
         }
         else // default
         {
-            towerChoice1 = Towers.towerBlueprints["MachineGunTower"];
+            towerChoice1 = Towers.towerBlueprints["DefaultTower"];
         }
         if (towerChoices[towerFrom2.towerClass][towerFrom2.towerTier + 1].Count > 0)
         {
@@ -112,7 +114,7 @@ public class UpgradeMenu : MonoBehaviour
         }
         else
         {
-            towerChoice2 = Towers.towerBlueprints["MachineGunTower"];
+            towerChoice2 = Towers.towerBlueprints["DefaultTower"];
         }
        
         // set upgrades

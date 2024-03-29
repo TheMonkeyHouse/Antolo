@@ -1,10 +1,22 @@
 {
+    "DefaultTower" : {
+        "towerID" : "DefaultTower",
+        "towerName" : "DefaultTower",
+        "description" : "You aren't supposed to see this",
+        "towerClass" : "Default",
+        "towerType" : "Default",
+        "towerTier" : 0,
+        "baseStats" : {
+            "health" : 200,
+            "energyCost" : 0
+        }
+    },
     "Homebase" : {
         "towerID" : "Homebase",
         "towerName" : "Homebase",
         "description" : "protect at all costs",
-        "towerClass" : "Homebase",
-        "towerType" : "Homebase",
+        "towerClass" : "Default",
+        "towerType" : "Default",
         "towerTier" : 0,
         "baseStats" : {
             "health" : 200,
@@ -117,6 +129,18 @@
             "energyCost" : 300,
             "magSize" : 5,
             "reloadTime" : 2.0
+        }
+    },
+    "ReinforcedWall" : {
+        "towerID" : "ReinforcedWall",
+        "towerName" : "Reinforced Wall",
+        "description" : "Wall with higher health",
+        "towerClass" : "Tanky",
+        "towerType" : "Wall",
+        "towerTier" : 2,
+        "baseStats" : {
+            "health" : 500,
+            "energyCost" :200
         }
     }
 }
