@@ -17,6 +17,9 @@ public class BattlefieldController : MonoBehaviour
 {
     public static BattlefieldController instance {get; private set;}
     private BattlefieldGrid battlefieldGrid;
+    private GridController gridController;
+    [SerializeField] private GameObject upgradeMenu;
+    [SerializeField] private StartNewWaveButton startNewWaveButton;
     public int width = 5;
     public int height = 5;
     public Player player {get; private set;}
@@ -34,6 +37,7 @@ public class BattlefieldController : MonoBehaviour
             Destroy(this);
         }
         battlefieldGrid = GetComponentInChildren<BattlefieldGrid>();
+        gridController = GetComponentInChildren<GridController>();
         player = GetComponentInChildren<Player>();
         // init events
         BattlefieldEventManager.instance.WallPlaced += PlaceWall;
@@ -41,10 +45,19 @@ public class BattlefieldController : MonoBehaviour
         BattlefieldEventManager.instance.TowerDestroyed += TowerDestroyed;
         BattlefieldEventManager.instance.WallDestroyed += WallDestroyed;
         BattlefieldEventManager.instance.StartNewWave += StartNewWave;
+        BattlefieldEventManager.instance.WaveCleared += WaveCleared;
+        BattlefieldEventManager.instance.UpgradeSelected += UpgradeSelected;
         //load towers
         Towers.LoadTowers();
         //load enemies
         Enemies.LoadEnemies();
+        // load tower choices
+        upgradeMenu.GetComponent<UpgradeMenu>().GenerateTowerChoices();
+        // set activity
+        upgradeMenu.SetActive(false);
+        gridController.SetActive(true);
+        startNewWaveButton.SetInteractable(true);
+        
     }
 
     private void Start()
@@ -122,6 +135,7 @@ public class BattlefieldController : MonoBehaviour
         currentPhase = BattlefieldPhase.WaveSpawningPhase;
         print("starting wave " + currentWave);
         StartCoroutine(newWave.WaveSpawner());
+        startNewWaveButton.SetInteractable(false);
     }
     private void WaveFinishedSpawning()
     {
@@ -130,12 +144,24 @@ public class BattlefieldController : MonoBehaviour
 
     private void WaveCleared()
     {
-        currentPhase = BattlefieldPhase.BuildPhase;
+        currentPhase = BattlefieldPhase.UpgradePhase;
+        upgradeMenu.GetComponent<UpgradeMenu>().GenerateUpgrades();
+        gridController.SetActive(false);
+        upgradeMenu.SetActive(true);
+    }
+
+    private void UpgradeSelected(int from, TowerBlueprint toTowerBlueprint)
+    {
+        currentPhase = BattlefieldPhase.ModifyBlueprintsPhase;
+        upgradeMenu.SetActive(false);
+        gridController.SetActive(true);
+        startNewWaveButton.SetInteractable(true);
     }
 
     private Wave MakeNewWave()
     {
-        float rating = Mathf.Pow(currentWave, 1.5f)*2.0f + 1.0f; // wave scaling function = 15x^(3) + 15 O(x^1.5)
+        // float rating = Mathf.Pow(currentWave, 1.5f)*2.0f + 1.0f; // wave scaling function = 15x^(3) + 15 O(x^1.5)
+        float rating = 1.0f;
         EnemyBlueprint[] possibleChoices = new EnemyBlueprint[] {Enemies.enemyBlueprints["BasicEnemy"]};
         float[] weights = new float[] {1.0f};
         return new Wave(rating, possibleChoices, weights);

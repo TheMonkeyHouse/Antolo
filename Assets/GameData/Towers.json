@@ -1,10 +1,23 @@
 {
+    "DefaultTower" : {
+        "towerID" : "DefaultTower",
+        "towerName" : "DefaultTower",
+        "description" : "You aren't supposed to see this",
+        "towerClass" : "Default",
+        "towerType" : "Default",
+        "towerTier" : 0,
+        "baseStats" : {
+            "health" : 200,
+            "energyCost" : 0
+        }
+    },
     "Homebase" : {
         "towerID" : "Homebase",
         "towerName" : "Homebase",
         "description" : "protect at all costs",
-        "towerType" : "Homebase",
-        "towerTier" : 1,
+        "towerClass" : "Default",
+        "towerType" : "Default",
+        "towerTier" : 0,
         "baseStats" : {
             "health" : 200,
             "energyCost" : 0
@@ -14,6 +27,7 @@
         "towerID" : "MachineGunTower",
         "towerName" : "Machine Gun Tower",
         "description" : "Medium range, low damage, high fire rate tower",
+        "towerClass" : "Damage",
         "towerType" : "HitscanAttackingTower",
         "towerTier" : 1,
         "baseStats" : {
@@ -29,6 +43,7 @@
         "towerID" : "SniperTower",
         "towerName" : "Sniper Tower",
         "description" : "High range, high damage, low fire rate tower",
+        "towerClass" : "Damage",
         "towerType" : "ReloadingHitscanAttackingTower",
         "towerTier" : 1,
         "baseStats" : {
@@ -46,6 +61,7 @@
         "towerID" : "BasicWall",
         "towerName" : "Basic Wall",
         "description" : "Tanks enemy attacks. Can place towers on top to give extra range",
+        "towerClass" : "Tanky",
         "towerType" : "Wall",
         "towerTier" : 1,
         "baseStats" : {
@@ -57,6 +73,7 @@
         "towerID" : "SpikeTrap",
         "towerName" : "Spike Trap",
         "description" : "Untargettable by meelee enemies. Does damage to enemies that walk on top.",
+        "towerClass" : "Tanky",
         "towerType" : "AOEAttackingTower",
         "towerTier" : 1,
         "baseStats" : {
@@ -71,7 +88,8 @@
         "towerID" : "HealingTower",
         "towerName" : "Healing Tower",
         "description" : "Slowly heals all towers in range",
-        "towerType" : "Support",
+        "towerClass" : "Support",
+        "towerType" : "AOESupportTower",
         "towerTier" : 1,
         "baseStats" : {
             "health" : 200.0,
@@ -85,7 +103,8 @@
         "towerID" : "EnergyGeneratorTower",
         "towerName" : "Energy Generator",
         "description" : "Generates 50 energy every 5 seconds during the wave",
-        "towerType" : "EnergyGenerating",
+        "towerClass" : "Support",
+        "towerType" : "EnergyGnerator",
         "towerTier" : 1,
         "baseStats" : {
             "health" : 150.0,
@@ -98,6 +117,7 @@
         "towerID" : "EnhancedSniperTower",
         "towerName" : "Enhanced Sniper Tower",
         "description" : "Higher damage sniper tower",
+        "towerClass" : "Damage",
         "towerType" : "ReloadingHitscanAttackingTower",
         "towerTier" : 2,
         "baseStats" : {
@@ -109,6 +129,18 @@
             "energyCost" : 300,
             "magSize" : 5,
             "reloadTime" : 2.0
+        }
+    },
+    "ReinforcedWall" : {
+        "towerID" : "ReinforcedWall",
+        "towerName" : "Reinforced Wall",
+        "description" : "Wall with higher health",
+        "towerClass" : "Tanky",
+        "towerType" : "Wall",
+        "towerTier" : 2,
+        "baseStats" : {
+            "health" : 500,
+            "energyCost" :200
         }
     }
 }

@@ -7,6 +7,7 @@ public class TowerBlueprint
     public string towerID;
     public string towerName;
     public string description;
+    public string towerClass;
     public string towerType;
     public int towerTier;
     public Dictionary<string, float> baseStats;

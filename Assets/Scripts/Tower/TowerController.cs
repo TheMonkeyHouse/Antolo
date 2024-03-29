@@ -26,7 +26,7 @@ public class TowerController : MonoBehaviour
     {
         GameObject newTowerGO = Instantiate(towerPrefab, gameObject.transform);
         newTowerGO.transform.position = new Vector3(location.x, location.y, 0);
-        System.Type newTowerScriptType = System.Type.GetType (towerBlueprint.towerID + ",Assembly-CSharp");
+        System.Type newTowerScriptType = System.Type.GetType(towerBlueprint.towerID + ",Assembly-CSharp");
         BaseTower baseTowerScript = newTowerGO.AddComponent(newTowerScriptType) as BaseTower;
         baseTowerScript.Initialize(towerBlueprint, location);
     }

@@ -32,6 +32,7 @@ public class BattlefieldEventManager : MonoBehaviour
     public event Action WaveFinishedSpawning;
     public event Action WaveCleared;
     public event Action<EnemyBlueprint> EnemySpawned;
+    public event Action<int, TowerBlueprint> UpgradeSelected;
 
 
     // more events added here
@@ -101,5 +102,10 @@ public class BattlefieldEventManager : MonoBehaviour
     public void OnEnemySpawned(EnemyBlueprint enemyBlueprint)
     {
         EnemySpawned?.Invoke(enemyBlueprint);
+    }
+
+    public void OnUpgradeSelected(int from, TowerBlueprint toTowerBlueprint)
+    {
+        UpgradeSelected?.Invoke(from, toTowerBlueprint);
     }
 }
